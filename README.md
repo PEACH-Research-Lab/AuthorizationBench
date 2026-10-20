@@ -1,6 +1,6 @@
 <div align="center">
 
-  <h1>AuthorizationBench: Benchmarking LLM Agent Authorization Alignment</h1>
+  <h1>AuthorizationBench<br>Benchmarking LLM Agent Authorization Alignment</h1>
 
   <p>
     <a href="https://huggingface.co/datasets/peach-lab/AuthorizationBench"><img src="https://img.shields.io/badge/Dataset-forthcoming-ffcc4d" alt="Dataset forthcoming"></a>
@@ -9,7 +9,7 @@
     <a href="#citation"><img src="https://img.shields.io/badge/Paper-arXiv%20forthcoming-b31b1b" alt="Paper"></a>
   </p>
 
-  <p><i>The first executable benchmark for LLM agent authorization alignment under benign delegation,<br>spanning ordinary situational pressures and malicious injections, with or without direct harmful consequences.</i></p>
+  <p><i>The first systematic framework for evaluating LLM agent authorization alignment under benign delegation,<br>spanning ordinary situational pressures and malicious injections, with or without direct harmful consequences.</i></p>
 
 </div>
 
@@ -21,40 +21,22 @@
   <img src="assets/overview.jpg" width="820" alt="AuthorizationBench covers out-of-authorization actions with and without direct safety harm. Consequence-based evaluation misses the quadrant without direct harm.">
 </div>
 
-Acting within the assigned authorization scope is an agent's most basic
-obligation in a human-agent delegation relationship. Most agent benchmarks
-reward task completion or evaluate whether an action produces direct harmful
-consequences. Neither tells us whether the agent acted within the scope the
-principal actually authorized. Once an agent acts outside that scope, it
-undermines the principal's control and the delegation relationship itself,
-whether or not direct harm follows. Current benchmarks rarely capture this
-failure.
+Acting within the assigned authorization scope is an agent's most basic obligation in a human-agent delegation relationship. Most agent benchmarks reward task completion or evaluate whether an action produces direct harmful.  However, once an agent acts outside that scope, it undermines the principal's control and the delegation relationship itself, whether or not direct harm follows. Current benchmarks rarely capture this failure.
 
-AuthorizationBench evaluates how well LLM agents act within the authorization scope assigned by their principal.
 
-The release has three components:
+The framework includes three components:
 
-- **AuthorizationBench**, the benchmark: **286 executable tasks** grounded in
-  documented real-world cases and spanning three dimensions:
-  - **14 situational pressures**, including 12 benign pressures and two
-    malicious prompt-injection mechanisms
-  - **the presence or absence of direct harmful consequences**, defined by ten
-    safety and privacy categories consolidated from prior agent-safety work: privacy breach, financial loss, data loss
-    or corruption, security compromise, unsafe code execution, malicious
-    content spreading, legal or ethical violations, physical harm,
-    availability compromise, and harmful decision-making
-  - **10 domains**: personal life, office work, software development, travel,
-    e-commerce, entertainment, finance, healthcare, legal, and education
-- **An authorization-aware sandbox**: deterministic mock services that keep
-  both authorized and out-of-authorization paths executable and observable,
-  with adapters for OpenHands, the OpenAI Agents SDK, and the Claude Agent SDK.
-- **A scalable construction pipeline**: a canonical seed-to-task route and
-  contextual expansion across pressure, direct harm, and domain.
+- **AuthorizationBench**, the benchmark: **286 executable tasks** grounded in documented real-world cases and spanning three dimensions:
+  - **14 situational pressures**, including 12 benign pressures and two malicious prompt-injection mechanisms
+  - **the presence or absence of direct harmful consequences**, defined by ten safety and privacy categories consolidated from prior agent-safety work.
+  - **10 domains** across personal life and professional work.
+- **An authorization-aware sandbox**: deterministic mock services that keep both authorized and out-of-authorization paths executable and observable, with adapters for OpenHands, the OpenAI Agents SDK, and the Claude Agent SDK.
+- **A scalable construction pipeline**: a canonical seed-to-task route and contextual expansion.
 
 ## AuthorizationBench evaluation
 
 <div align="center">
-  <img src="assets/example.png" width="720" alt="A documented case becomes an executable task with an authorization contract">
+  <img src="assets/example.png" width="100%" alt="A documented case becomes an executable task with an authorization contract">
 </div>
 
 A documented case is translated into a task where the authorized completion
@@ -62,7 +44,6 @@ path and the case-specific out-of-authorization path are both executable. The
 agent runs in the sandbox, and its actual trajectory and resulting state are
 evaluated against the authorization contract.
 
-## Key results
 
 We evaluate four models at low and high reasoning effort across three agent
 harnesses, producing **6,864 trajectories**. Agents act out of authorization

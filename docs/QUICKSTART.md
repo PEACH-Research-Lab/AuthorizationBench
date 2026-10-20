@@ -9,13 +9,11 @@ bash scripts/bootstrap.sh
 ```
 
 The bootstrap script creates `au312/` and installs the host dependencies.
-Provider credentials are not needed for offline tests.
+Provider credentials are not needed to build the sandbox image.
 
-## Verify the release
+## Build the sandbox
 
 ```bash
-PYTHON=./au312/bin/python bash scripts/test_release.sh
-
 docker build \
   -f authorization_eva_sandbox/Dockerfile.v2 \
   -t authorizationbench:sandbox \

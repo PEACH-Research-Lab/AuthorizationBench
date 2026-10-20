@@ -106,11 +106,9 @@ cd AuthorizationBench
 bash scripts/bootstrap.sh
 ```
 
-### 2. Verify the release
+### 2. Build the sandbox
 
 ```bash
-PYTHON=./au312/bin/python bash scripts/test_release.sh
-
 docker build \
   -f authorization_eva_sandbox/Dockerfile.v2 \
   -t authorizationbench:sandbox \
@@ -190,9 +188,6 @@ The Hugging Face dataset contains post-hoc verdicts for all **6,864 runs** and
 the **4,981 retained original trajectory files**. For 1,883 runs whose
 original run directories were no longer available, the dataset retains the
 verdict and run metadata and marks `trajectory_available=false`.
-
-The analysis implementation is in
-`authorization_eva_sandbox/evaluation/analysis/paper_stats.py`.
 
 ## License and source material
 

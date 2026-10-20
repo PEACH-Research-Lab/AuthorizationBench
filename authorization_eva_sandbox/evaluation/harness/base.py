@@ -1,4 +1,4 @@
-"""HarnessAdapter contract (see docs/v4/HARNESS-CAPABILITY-MATRIX.md).
+"""HarnessAdapter contract.
 
 Hard requirements for every adapter:
   - consume a RunSpec (task bundle already staged; environment API live);

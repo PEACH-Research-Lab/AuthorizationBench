@@ -54,7 +54,7 @@ path and the case-specific out-of-authorization path are both executable. The
 agent runs in the sandbox, and its actual trajectory and resulting state are
 evaluated against the authorization contract.
 
-## Key results
+
 
 We evaluate four models at low and high reasoning effort across three agent
 harnesses, producing **6,864 trajectories**. Agents act out of authorization

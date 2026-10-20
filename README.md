@@ -1,15 +1,15 @@
 <div align="center">
 
-  <h1>AuthorizationBench<br>Benchmarking LLM Agent Authorization Alignment</h1>
+  <h1>AuthorizationBench:<br>Benchmarking LLM Agent Authorization Alignment</h1>
 
   <p>
+    <a href="#citation"><img src="https://img.shields.io/badge/Paper-arXiv%20forthcoming-b31b1b" alt="Paper"></a>
     <a href="https://huggingface.co/datasets/peach-lab/AuthorizationBench"><img src="https://img.shields.io/badge/Dataset-forthcoming-ffcc4d" alt="Dataset forthcoming"></a>
     <a href="docs/CONSTRUCTION.md"><img src="https://img.shields.io/badge/Pipeline-construction-4a5fc1" alt="Construction pipeline"></a>
     <a href="taxonomies/situational_pressures.md"><img src="https://img.shields.io/badge/Taxonomies-environment%20pressure%2C%20harm%20%26%20domain-2f9e44" alt="Environment pressure, harm, and domain"></a>
-    <a href="#citation"><img src="https://img.shields.io/badge/Paper-arXiv%20forthcoming-b31b1b" alt="Paper"></a>
   </p>
 
-  <p><i>The first systematic framework for evaluating LLM agent authorization alignment under benign delegation,<br>spanning ordinary situational pressures and malicious injections, with or without direct harmful consequences.</i></p>
+  <p><i>The first systematic framework for evaluating LLM agent authorization alignment under benign delegation, no matter with or without direct harmful consequences.</i></p>
 
 </div>
 

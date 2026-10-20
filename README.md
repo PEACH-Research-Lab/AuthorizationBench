@@ -5,7 +5,7 @@
   <p>
     <a href="https://huggingface.co/datasets/peach-lab/AuthorizationBench"><img src="https://img.shields.io/badge/Dataset-forthcoming-ffcc4d" alt="Dataset forthcoming"></a>
     <a href="docs/CONSTRUCTION.md"><img src="https://img.shields.io/badge/Pipeline-construction-4a5fc1" alt="Construction pipeline"></a>
-    <a href="docs/TAXONOMIES.md"><img src="https://img.shields.io/badge/Taxonomies-pressure%20%26%20harm-2f9e44" alt="Taxonomies"></a>
+    <a href="taxonomies/situational_pressures.md"><img src="https://img.shields.io/badge/Taxonomies-pressure%2C%20harm%20%26%20domain-2f9e44" alt="Taxonomies"></a>
     <a href="#citation"><img src="https://img.shields.io/badge/Paper-arXiv%20forthcoming-b31b1b" alt="Paper"></a>
   </p>
 
@@ -91,7 +91,7 @@ benchmark/
 ├── manifest.json       frozen release inventory
 └── lineage.csv         source case to original and expanded task mapping
 
-taxonomies/             human-readable pressure and direct-harm taxonomies
+taxonomies/             pressure, direct-harm, and domain definitions
 results/paper/          frozen aggregate results used by the paper
 ```
 
@@ -164,7 +164,7 @@ pipeline includes generation prompts, deterministic gates, bounded repair,
 service realization, and expansion code. Historical migration utilities and
 one-off development scripts are intentionally excluded.
 
-See [Construction pipeline](docs/CONSTRUCTION.md) for stages and model roles.
+See [Construction pipeline](docs/CONSTRUCTION.md) for the construction stages.
 
 ## Taxonomies
 
@@ -179,6 +179,11 @@ The **direct-harm taxonomy** consolidates categories from Agent-SafetyBench and
 OpenAgentSafety while preserving category-level attribution. See
 [`taxonomies/direct_harm.md`](taxonomies/direct_harm.md) and
 [`harm_taxonomy.json`](authorization_eva_sandbox/task_generation/taxonomy/harm_taxonomy.json).
+
+The **domain taxonomy** names the information, asset, or record protected by
+the authorization boundary. See
+[`taxonomies/domains.md`](taxonomies/domains.md) and
+[`domain_taxonomy.json`](authorization_eva_sandbox/task_generation/taxonomy/domain_taxonomy.json).
 
 ## Dataset and reproducibility
 

@@ -23,15 +23,15 @@ The pipeline constructs and validates:
 Each transition has deterministic gates and bounded repair. Some capability
 gaps require human review before a new service template is accepted.
 
-Run `--help` for stage ranges, output locations, and model-profile overrides:
+Run `--help` for stage ranges and output locations:
 
 ```bash
 ./au312/bin/python -m authorization_eva_sandbox.task_generation.run_v3 --help
 ```
 
-Model profiles are read from
-`authorization_eva_sandbox/evaluation/config.toml`. The example configuration
-lists every profile referenced by the pipeline.
+Local model settings are read from
+`authorization_eva_sandbox/evaluation/config.toml`. Copy
+`config.toml.example` and fill in only the profiles you intend to run.
 
 ## Contextual expansion
 
@@ -58,16 +58,3 @@ Trigger expansion is implemented by:
 
 Expansion starts from a validated task and varies one contextual dimension
 while preserving its assigned task and case-specific authorization boundary.
-
-## Model roles
-
-The released defaults use:
-
-- GLM 5.3 to draft authorization contracts, with GPT-5.6 Sol critique
-- GPT-5.6 Sol for scenario and infrastructure generation, with Claude Opus 4.8 critique
-- Claude Opus 4.8 for concrete agent-facing material, with GPT-5.6 Sol critique
-- GPT-4.1 Mini for path validation, with MiMo v2.6 Pro as the Oracle User when needed
-- GPT-5.6 Sol and Claude Opus models for contextual expansion review and writing
-
-All model-backed steps can incur cost. Generated artifacts must still pass the
-deterministic gates and human review described by the pipeline.

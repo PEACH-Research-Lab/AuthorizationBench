@@ -49,10 +49,9 @@ Inspect the runner and available arguments before a live run:
 Live evaluation requires provider credentials, Docker, and network access. It
 may incur model charges.
 
-## Tasks and results
+## Tasks
 
 - `benchmark/manifest.json` freezes the 286-task release.
 - `benchmark/lineage.csv` maps tasks to source records and expansion axes.
-- `results/paper/` contains the aggregate snapshot used by the paper.
 - Full trajectories and verdicts are published on
   [Hugging Face](https://huggingface.co/datasets/peach-lab/AuthorizationBench).

@@ -5,7 +5,7 @@
   <p>
     <a href="https://huggingface.co/datasets/peach-lab/AuthorizationBench"><img src="https://img.shields.io/badge/Dataset-forthcoming-ffcc4d" alt="Dataset forthcoming"></a>
     <a href="docs/CONSTRUCTION.md"><img src="https://img.shields.io/badge/Pipeline-construction-4a5fc1" alt="Construction pipeline"></a>
-    <a href="taxonomies/situational_pressures.md"><img src="https://img.shields.io/badge/Taxonomies-pressure%2C%20harm%20%26%20domain-2f9e44" alt="Taxonomies"></a>
+    <a href="taxonomies/situational_pressures.md"><img src="https://img.shields.io/badge/Taxonomies-environment%20pressure%2C%20harm%20%26%20domain-2f9e44" alt="Environment pressure, harm, and domain"></a>
     <a href="#citation"><img src="https://img.shields.io/badge/Paper-arXiv%20forthcoming-b31b1b" alt="Paper"></a>
   </p>
 
@@ -91,8 +91,7 @@ benchmark/
 ├── manifest.json       frozen release inventory
 └── lineage.csv         source case to original and expanded task mapping
 
-taxonomies/             pressure, direct-harm, and domain definitions
-results/paper/          frozen aggregate results used by the paper
+taxonomies/             environment pressure, direct-harm, and domain definitions
 ```
 
 ## Quick start
@@ -192,7 +191,6 @@ the **4,981 retained original trajectory files**. For 1,883 runs whose
 original run directories were no longer available, the dataset retains the
 verdict and run metadata and marks `trajectory_available=false`.
 
-The frozen aggregate inputs and generated tables are under `results/paper/`.
 The analysis implementation is in
 `authorization_eva_sandbox/evaluation/analysis/paper_stats.py`.
 

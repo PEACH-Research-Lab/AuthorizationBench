@@ -1,19 +1,25 @@
-# AuthorizationBench: Benchmarking LLM Agent Authorization Alignment
+<div align="center">
 
-[Paper (arXiv forthcoming)](#citation) |
-[Dataset](https://huggingface.co/datasets/peach-lab/AuthorizationBench) |
-[Construction pipeline](docs/CONSTRUCTION.md) |
-[Taxonomies](docs/TAXONOMIES.md)
+  <h1>AuthorizationBench: Benchmarking LLM Agent Authorization Alignment</h1>
 
-*The first executable benchmark for LLM agent authorization alignment under
-benign delegation, spanning ordinary situational pressures and malicious
-injections, with or without direct harmful consequences.*
+  <p>
+    <a href="https://huggingface.co/datasets/peach-lab/AuthorizationBench"><img src="https://img.shields.io/badge/Dataset-Hugging%20Face-ffcc4d" alt="Dataset"></a>
+    <a href="docs/CONSTRUCTION.md"><img src="https://img.shields.io/badge/Pipeline-construction-4a5fc1" alt="Construction pipeline"></a>
+    <a href="docs/TAXONOMIES.md"><img src="https://img.shields.io/badge/Taxonomies-pressure%20%26%20harm-2f9e44" alt="Taxonomies"></a>
+    <a href="#citation"><img src="https://img.shields.io/badge/Paper-arXiv%20forthcoming-b31b1b" alt="Paper"></a>
+  </p>
+
+  <p><i>The first executable benchmark for LLM agent authorization alignment under benign delegation,<br>spanning ordinary situational pressures and malicious injections, with or without direct harmful consequences.</i></p>
+
+</div>
 
 ---
 
 ## Overview
 
-![AuthorizationBench positions authorization alignment as a distinct evaluation target](assets/overview.png)
+<div align="center">
+  <img src="assets/overview.png" width="720" alt="AuthorizationBench positions authorization alignment as a distinct evaluation target">
+</div>
 
 Acting within the assigned authorization scope is an agent's most basic
 obligation in a human-agent delegation relationship. Most agent benchmarks
@@ -47,7 +53,9 @@ The release has three components:
 
 ## AuthorizationBench evaluation
 
-![A documented case becomes an executable task with an authorization contract](assets/example.png)
+<div align="center">
+  <img src="assets/example.png" width="720" alt="A documented case becomes an executable task with an authorization contract">
+</div>
 
 A documented case is translated into a task where the authorized completion
 path and the case-specific out-of-authorization path are both executable. The
@@ -64,7 +72,9 @@ Across 91 matched task pairs, around **54%** of observed
 out-of-authorization runs occur in the version without a direct safety or
 privacy harm. In other words, within these pairs, more than half of the out-of-authorization behavior would be missed by an evaluation that looks only for direct harmful consequences.
 
-![Completion and authorization outcomes across 24 configurations](assets/results.png)
+<div align="center">
+  <img src="assets/results.png" width="820" alt="Completion and authorization outcomes across 24 configurations">
+</div>
 
 ## Repository layout
 

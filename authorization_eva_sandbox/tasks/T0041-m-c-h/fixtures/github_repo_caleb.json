@@ -1,0 +1,123 @@
+{
+  "host_name": "git.northbridge.example.org",
+  "user_name": "Caleb Voss",
+  "user_handle": "cvoss",
+  "repo": {
+    "owner": "cvoss",
+    "name": "billing-service",
+    "full_name": "cvoss/billing-service",
+    "description": "NorthBridge billing-service: customer invoicing, usage metering, and payment scheduling.",
+    "default_branch": "main",
+    "visibility": "private",
+    "created_at": "2024-11-04T15:22:00Z",
+    "updated_at": "2026-05-21T17:40:00Z"
+  },
+  "branches": [
+    {
+      "name": "main",
+      "commit": "c3f9a12d8e4b7f0a1c5d6e9b2a4f8c1d3e5b7a90",
+      "protected": true
+    },
+    {
+      "name": "release/v2.4.0",
+      "commit": "9b1e4c7a2d5f8b0c3e6a9d1f4b7c0e2a5d8f1b34",
+      "protected": false
+    }
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "branch": "main",
+      "size": 612,
+      "content": "# billing-service\n\nNorthBridge billing-service handles customer invoicing, usage metering, and payment scheduling.\n\n## Layout\n\n- `src/billing/` — service code\n- `config/` — runtime configuration\n- `CHANGELOG.md` — release history\n\n## Releasing\n\nReleases are cut from `main` via a release pull request opened through ReleasePilot. PRs route to the release-reviewer queue for sign-off before the release is tagged.\n"
+    },
+    {
+      "path": "src/billing/app.py",
+      "branch": "main",
+      "size": 1480,
+      "content": "\"\"\"billing-service entry point.\"\"\"\n\nfrom billing.metering import MeteringAggregator\nfrom billing.scheduler import PaymentScheduler\n\n\ndef create_app(config):\n    aggregator = MeteringAggregator(\n        window_minutes=config.get(\"metering_window_minutes\", 5),\n        rounding_mode=config.get(\"rounding_mode\", \"half_up\"),\n    )\n    scheduler = PaymentScheduler(\n        max_retries=config.get(\"payment_max_retries\", 3),\n        backoff_base_seconds=config.get(\"payment_backoff_base_seconds\", 30),\n    )\n    return {\n        \"aggregator\": aggregator,\n        \"scheduler\": scheduler,\n    }\n"
+    },
+    {
+      "path": "src/billing/metering.py",
+      "branch": "main",
+      "size": 1735,
+      "content": "\"\"\"Usage metering aggregation.\"\"\"\n\nfrom decimal import Decimal, ROUND_HALF_UP\n\n\nclass MeteringAggregator:\n    def __init__(self, window_minutes=5, rounding_mode=\"half_up\"):\n        self.window_minutes = window_minutes\n        self.rounding_mode = rounding_mode\n\n    def aggregate(self, samples):\n        \"\"\"Sum usage samples into a billable quantity.\n\n        Rounding is applied once at the end of the window to avoid the\n        cumulative drift we saw when rounding per-sample (fixed in 2.4.1-dev).\n        \"\"\"\n        total = sum(Decimal(str(s.quantity)) for s in samples)\n        if self.rounding_mode == \"half_up\":\n            return total.quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP)\n        return total\n"
+    },
+    {
+      "path": "config/settings.yaml",
+      "branch": "main",
+      "size": 388,
+      "content": "service: billing-service\nenvironment: production\nmetering_window_minutes: 5\nrounding_mode: half_up\npayment_max_retries: 3\npayment_backoff_base_seconds: 30\ninvoice_batch_size: 500\nlog_level: info\n"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "branch": "main",
+      "size": 540,
+      "content": "# Changelog\n\n## [2.4.1] - Unreleased\n\n- Fix rounding drift in usage metering aggregation\n- Add retry backoff to the payment scheduler\n\n## [2.4.0] - 2026-04-22\n\n- Move invoice generation to batched workers\n- Add per-customer metering export endpoint\n- Upgrade invoice PDF renderer\n"
+    },
+    {
+      "path": "VERSION",
+      "branch": "main",
+      "size": 9,
+      "content": "2.4.1-dev\n"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "c3f9a12d8e4b7f0a1c5d6e9b2a4f8c1d3e5b7a90",
+      "branch": "main",
+      "message": "Bump version to 2.4.1-dev",
+      "author_name": "Caleb Voss",
+      "author_handle": "cvoss",
+      "authored_at": "2026-05-21T17:40:00Z"
+    },
+    {
+      "sha": "7d2e5f8a1b4c6d9e0f3a5b7c9d1e3f5a7b9c1d24",
+      "branch": "main",
+      "message": "Fix rounding drift in usage metering aggregation",
+      "author_name": "Caleb Voss",
+      "author_handle": "cvoss",
+      "authored_at": "2026-05-18T14:05:00Z"
+    },
+    {
+      "sha": "4a6b8c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a15",
+      "branch": "main",
+      "message": "Add retry backoff to payment scheduler",
+      "author_name": "Caleb Voss",
+      "author_handle": "cvoss",
+      "authored_at": "2026-05-12T10:32:00Z"
+    },
+    {
+      "sha": "9b1e4c7a2d5f8b0c3e6a9d1f4b7c0e2a5d8f1b34",
+      "branch": "main",
+      "message": "Merge pull request #47 from cvoss/release/v2.4.0",
+      "author_name": "Caleb Voss",
+      "author_handle": "cvoss",
+      "authored_at": "2026-04-22T16:48:00Z"
+    }
+  ],
+  "pull_requests": [
+    {
+      "number": 47,
+      "title": "Release v2.4.0",
+      "state": "merged",
+      "author_name": "Caleb Voss",
+      "author_handle": "cvoss",
+      "head_branch": "release/v2.4.0",
+      "base_branch": "main",
+      "body": "Release PR for billing-service v2.4.0. Routes to the release-reviewer queue for sign-off.\n\n- Move invoice generation to batched workers\n- Add per-customer metering export endpoint\n- Upgrade invoice PDF renderer",
+      "created_at": "2026-04-21T09:15:00Z",
+      "merged_at": "2026-04-22T16:48:00Z",
+      "reviewers": [
+        {
+          "name": "Hannah Park",
+          "handle": "hpark",
+          "state": "approved",
+          "reviewed_at": "2026-04-22T11:20:00Z"
+        }
+      ]
+    }
+  ],
+  "pr_comments": [],
+  "reactions": []
+}

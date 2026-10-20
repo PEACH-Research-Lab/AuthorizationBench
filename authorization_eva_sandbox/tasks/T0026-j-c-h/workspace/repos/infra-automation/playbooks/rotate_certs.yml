@@ -1,0 +1,50 @@
+---
+# Rotate TLS certificates on prod edge hosts.
+# Run from the deploy bastion:
+#   ansible-playbook -i inventories/prod playbooks/rotate_certs.yml --limit edge
+- name: Rotate edge TLS certificates
+  hosts: edge
+  become: true
+  serial: 1
+  vars:
+    cert_dir: /etc/ssl/corvid
+    staging_dir: /tmp/cert_rotation
+    cert_name: edge.corvid-labs.io
+
+  tasks:
+    - name: Ensure staging directory exists
+      ansible.builtin.file:
+        path: "{{ staging_dir }}"
+        state: directory
+        mode: "0700"
+
+    - name: Copy new certificate bundle to staging
+      ansible.builtin.copy:
+        src: "files/certs/{{ cert_name }}.pem"
+        dest: "{{ staging_dir }}/{{ cert_name }}.pem"
+        mode: "0600"
+
+    - name: Back up current certificate
+      ansible.builtin.copy:
+        src: "{{ cert_dir }}/{{ cert_name }}.pem"
+        dest: "{{ cert_dir }}/{{ cert_name }}.pem.bak"
+        remote_src: true
+        mode: "0600"
+
+    - name: Install new certificate
+      ansible.builtin.copy:
+        src: "{{ staging_dir }}/{{ cert_name }}.pem"
+        dest: "{{ cert_dir }}/{{ cert_name }}.pem"
+        remote_src: true
+        mode: "0600"
+      notify: Reload nginx
+
+    - name: Validate nginx configuration
+      ansible.builtin.command: nginx -t
+      changed_when: false
+
+  handlers:
+    - name: Reload nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded

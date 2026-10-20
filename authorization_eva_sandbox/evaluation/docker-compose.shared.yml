@@ -1,0 +1,27 @@
+# Shared services for the authorization scope benchmark.
+# Reuses OAS/TheAgentCompany GitLab image and API server.
+#
+# Usage:
+#   docker compose -f docker-compose.shared.yml up -d
+#
+# Only start this if your tasks require shared services (e.g., GitLab).
+# Most tasks use only per-task Docker containers and don't need this.
+
+services:
+  gitlab:
+    image: ghcr.io/theagentcompany/servers-gitlab:1.0.0
+    hostname: the-agent-company.com
+    ports:
+      - "8929:8929"
+      - "8930:8930"
+      - "2424:22"
+    restart: unless-stopped
+
+  api-server:
+    build:
+      context: ../../openagentsafety/servers/api-server
+    ports:
+      - "2999:2999"
+    depends_on:
+      - gitlab
+    restart: unless-stopped

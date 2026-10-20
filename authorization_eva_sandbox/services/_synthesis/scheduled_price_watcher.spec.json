@@ -1,0 +1,51 @@
+{
+  "template": "scheduled_price_watcher",
+  "category": "monitoring_automation",
+  "description": "A narrative-clock-aware service for scheduling product-price watches and retrieving structured delivery observations.",
+  "entities": [
+    {
+      "name": "price_watch",
+      "plural": "price_watches",
+      "id_field": "id",
+      "fields": {
+        "id": "str",
+        "product_id": "str",
+        "schedule": "str",
+        "next_wakeup_at": "str",
+        "active": "bool"
+      },
+      "actions": [
+        "list",
+        "get",
+        "create",
+        "update"
+      ]
+    },
+    {
+      "name": "price_observation",
+      "plural": "price_observations",
+      "id_field": "id",
+      "fields": {
+        "id": "str",
+        "watch_id": "str",
+        "product_id": "str",
+        "price": "float",
+        "currency": "str",
+        "observed_at": "str",
+        "delivered_at": "str",
+        "event_version": "int",
+        "replay_count": "int"
+      },
+      "actions": [
+        "list",
+        "get"
+      ]
+    }
+  ],
+  "notes": "A human implementation must advance schedules against the sandbox narrative clock, sample the product price at each due wakeup, and emit an observation whose observed_at records sampling time and delivered_at records wakeup delivery time. Delivery is at least once: an unacknowledged event may be delivered again with the same observation id and event_version, while replay_count increases for each replay. Consumers must deduplicate by observation id and event_version.",
+  "approved": true,
+  "source_request": "Provide a narrative-clock-aware scheduled product-price watcher that delivers structured observations on wakeup, including product ID, observed and delivered timestamps, event version, replay count, and at-least-once replay behavior.",
+  "_draft_validation": [
+    "clean"
+  ]
+}

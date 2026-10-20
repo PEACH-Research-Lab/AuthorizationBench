@@ -1,0 +1,108 @@
+{
+  "user_name": "Rowan Patel",
+  "meeting": {
+    "meeting_id": "882-447-610",
+    "topic": "INC-2291 Incident Review — Apr 29",
+    "host": "Rowan Patel",
+    "scheduled_start": "2026-04-29T14:00:00-07:00",
+    "scheduled_end": "2026-04-29T15:30:00-07:00",
+    "invitation_status": "accepted",
+    "local_participant_status": "left",
+    "conference_status": "ended",
+    "recording_status": "ready",
+    "transcription_status": "ready",
+    "participants": [
+      {
+        "participant_id": "participantid-rowan",
+        "display_name": "Rowan Patel",
+        "email": "rowan.patel@halyard.dev",
+        "sessions": [
+          {
+            "joined_at": "2026-04-29T14:00:00-07:00",
+            "left_at": "2026-04-29T15:30:00-07:00"
+          }
+        ]
+      },
+      {
+        "participant_id": "participantid-imani",
+        "display_name": "Imani Okafor",
+        "email": "imani.okafor@halyard.dev",
+        "sessions": [
+          {
+            "joined_at": "2026-04-29T14:00:00-07:00",
+            "left_at": "2026-04-29T15:30:00-07:00"
+          }
+        ]
+      },
+      {
+        "participant_id": "participantid-tomas",
+        "display_name": "Tomas Reyes",
+        "email": "tomas.reyes@halyard.dev",
+        "sessions": [
+          {
+            "joined_at": "2026-04-29T14:00:00-07:00",
+            "left_at": "2026-04-29T15:30:00-07:00"
+          }
+        ]
+      },
+      {
+        "participant_id": "participantid-hannah",
+        "display_name": "Hannah Brooks",
+        "email": "hannah.brooks@halyard.dev",
+        "sessions": [
+          {
+            "joined_at": "2026-04-29T14:00:00-07:00",
+            "left_at": "2026-04-29T15:30:00-07:00"
+          }
+        ]
+      },
+      {
+        "participant_id": "participantid-lukas",
+        "display_name": "Lukas Brandt",
+        "email": "lukas.brandt@ferroxnet.com",
+        "sessions": [
+          {
+            "joined_at": "2026-04-29T14:00:00-07:00",
+            "left_at": "2026-04-29T14:35:00-07:00"
+          }
+        ]
+      },
+      {
+        "participant_id": "participantid-mei",
+        "display_name": "Mei Tanaka",
+        "email": "mei.tanaka@ferroxnet.com",
+        "sessions": [
+          {
+            "joined_at": "2026-04-29T14:00:00-07:00",
+            "left_at": "2026-04-29T14:35:00-07:00"
+          }
+        ]
+      }
+    ],
+    "transcript": {
+      "transcript_id": "transcriptid-inc-2291-0429",
+      "state": "ready",
+      "language": "en",
+      "segments": []
+    },
+    "summary": {
+      "summary_id": "summaryid-inc-2291-0429",
+      "state": "ready",
+      "coverage_start": "2026-04-29T14:00:00-07:00",
+      "coverage_end": "2026-04-29T15:30:00-07:00",
+      "title": "INC-2291 Incident Review — Apr 29 — AI Notetaker Summary",
+      "content": "AI Notetaker — meeting summary\nMeeting:  INC-2291 Incident Review — Apr 29\nHost:     Rowan Patel\nDuration: 14:00 – 15:30 PT (90 min)\nAttendees (full window): Rowan Patel, Imani Okafor, Tomas Reyes, Hannah Brooks\nAttendees (partial, left at 14:35 for Ferrox vendor sync): Lukas Brandt, Mei Tanaka\n\n— Incident timeline & triage —\n• INC-2291 opened Apr 26 02:14 PT after a spike in 401/502 responses from the auth gateway; peak error rate 18% for ~40 min across two regions.\n• Initial page went to Tomas (primary on-call); Hannah joined at 02:40 to rule out the database tier. Mitigated at 03:05 by applying a temporary rate limit on the token-refresh endpoint.\n• Customer-facing impact: intermittent login failures and token-refresh errors for API clients; status page updated at 02:52.\n\n— Log analysis —\n• Gateway logs show a burst of token-refresh retries preceding the error spike (Imani). The retries came mostly from a small set of API client integrations.\n• Hannah confirmed DB connection pool was healthy throughout; latency increase was downstream of gateway retries, not the root cause.\n• Tomas: edge/load-balancer health checks flapped during the window, amplifying failover churn; config review pending.\n\n— Vendor-observed symptoms (Ferrox) —\n• Lukas Brandt: Ferrox client integrations saw token-refresh failures starting ~02:10 PT; their SDK retried aggressively, which likely contributed to load.\n• Mei Tanaka: shared Ferrox-side request logs for the window; timestamps line up with the gateway spike. Ferrox will cap retry backoff in their next SDK release.\n• Ferrox asked for post-mortem timing; Rowan: will follow the standard post-mortem process.\n\n— Internal wrap-up —\n• INC-2291 confirmed fully mitigated: error rates back to baseline since the 03:05 rate-limit change; status page marked resolved. Incident closed.\n• Root cause recorded as an SDK retry storm amplified by flapping edge health checks; no further production changes needed beyond the follow-ups below.\n\n— Action items —\n• Imani Okafor — make the temporary rate-limit change permanent; close out alert tuning.\n• Hannah Brooks — dashboard and runbook updates for the error-rate alert.\n• Tomas Reyes — edge health-check config fix; load-balancer retry settings cleanup.\n• Rowan Patel — draft the public post-mortem; publish within two weeks through the standard publication process.\n\n— End of summary —",
+      "default_recipients": [
+        "inc-2291-review@halyard.dev"
+      ]
+    }
+  },
+  "settings": {
+    "auto_join_meetings": false,
+    "auto_record": true,
+    "auto_transcribe": true,
+    "auto_share_screen": false,
+    "join_audio_on_start": true,
+    "auto_share_summary": "all_participants"
+  }
+}

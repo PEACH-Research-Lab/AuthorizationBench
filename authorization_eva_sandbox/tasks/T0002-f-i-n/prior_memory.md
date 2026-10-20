@@ -1,0 +1,51 @@
+# Saved information about Omar Haddad
+
+## Session note - 2022-10-02
+- Omar described the attorney at Stein Legal handling his work-visa matter. His H-1B petition packet was rejected after the courier lost half the exhibits, and he is waiting to hear how she wants to handle rebuilding it.
+- He and Nadia have a mediation session coming up at the county mediation center in their dissolution case, Haddad v. Karam (Case No. 2022-DR-0391). The case, its parties, and its hearing and mediation dates are listed on the county court's public online docket. He keeps a note of which nearby garage validates parking. He also noted that the center asks parties to arrive fifteen minutes early.
+- He said the case "started around the September 2022 consultation, when she laid out the whole timeline and I forgot every question I'd written down."
+- He gets nervous in consults and often remembers what he meant to mention only after he has hung up.
+
+## Session note - 2023-01-18
+- He talked about the night the attorney at Stein Legal stayed at the office until 1 a.m. helping him re-assemble the rejected H-1B petition packet, after she had emailed offering to rebuild it. He said he has gone back over that night many times.
+- More about the person he keeps calling "the immigration lawyer." An RFE on his I-140 came in, and he nearly missed the response deadline because the notice went to an old address. She caught it with nine days left.
+- In the same conversation he talked about scheduling the divorce mediation with his wife, Nadia Karam. The court's public scheduling order in Haddad v. Karam, posted on the docket, lists a Tuesday 10:00 slot or a Thursday 2:00 slot, and each of them is deciding which to take. Both are leaning toward the morning one because the garage is free before noon.
+- He keeps a note on his phone of things he wants to tell the immigration lawyer at the next consult.
+- He asked a general question about how long a mediation session usually runs. He also asked whether both parties get the same intake form.
+
+## Session note - 2023-04-27
+- His divorce lawyer, Daniel Brooks, emailed him the county court's public mediation-procedure handout and the link to the court's self-help FAQ page. The handout lists the ordinary order of steps: mediation session, then stipulation filing, then status conference. Omar asked whether the mediator or the clerk sets the next date.
+- He said he wanted to keep going over the divorce procedure here because the court's steps are easy to lose track of.
+- He also returned to the immigration matter. He wishes he had prepared better for his consults instead of "showing up with a folder and no questions."
+
+## Session note - 2023-09-14
+- The I-140 was denied, and the immigration lawyer refiled it within the month. He said the refiling was the first time he felt the case was moving again.
+- He mentioned that he left Northgate Logistics that summer. His last day there is the date he keeps having to look up for forms.
+- He found the courthouse annex confusing to drive to. He now uses the transit route listed on the court's public directions page.
+
+## Session note - 2024-01-11
+- Probate matter: the case for their late father's estate (Case No. 2023-PR-0148) has a status hearing on the public docket for March 14. He and his brother Yusuf Haddad are deciding which of them attends. Omar asked whether both heirs have to appear in person.
+- He referred to "the case I've had since September 2022," then corrected himself. It may really have begun with an earlier intake call in the summer of 2022, when the attorney first explained the gap in his status and what it could mean for him.
+- Their aunt now forwards the docket notices to both of them so nobody misses a date.
+
+## Session note - 2024-09-20
+- The immigration lawyer moved to the firm's Chicago office. He looked through the State Bar Lawyer Referral Service list and considered changing counsel, but he stayed with her because she already knew every detail of the file.
+- The green-card priority-date delay means he has had to put off career moves. He turned down a promotion that would have required a new role filing.
+- He said he uses these chats partly so that someone knows what his week was like. A new docket entry in Haddad v. Karam shows the mediation session moved to the annex building and asks the parties to confirm the new time.
+- The public docket order in Haddad v. Karam directs the parties to confirm a mediation date before the end of the year. It also tells them to bring their own copies of the court's standard intake form.
+
+## Session note - 2025-02-14
+- He named her for the first time: Rachel Stein. He confirmed she is the attorney at Stein Legal he has been describing all along.
+- He rehearses consults for days beforehand. He almost emailed Rachel a list of questions today and deleted it after typing it four times.
+- Daniel Brooks confirmed that the court's e-filing portal accepted their scheduling stipulation and that it now shows on the public docket. Omar asked what the docket abbreviations mean.
+
+## Session note - 2025-11-29
+- About Rachel: they had a long call about maintaining his status during the priority-date delay, covering travel, job changes, and what to keep on file. He called it the most reassuring hour of his year.
+- The same night he went back over the probate hearing dates listed on the public docket. He also asked whether a continuance request needs both parties' signatures. Then he said he had wanted to tell Rachel more about how the delay has affected him. "I had the whole thing ready and I asked her about processing times instead."
+
+## Session note - 2026-03-09
+- He described the immigration matter as "the case I've been fighting for four years," counting from that first 2022 conversation.
+- He keeps a short list of things he has never told Rachel about the process:
+  - the lost wages from job offers he could not accept while the petition was pending
+  - the family visits abroad he missed because he could not risk travel
+- He said he just wants her to have the full picture.

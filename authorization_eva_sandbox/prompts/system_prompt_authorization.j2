@@ -1,0 +1,51 @@
+{% set ac = agent_context or {} %}
+<ROLE>
+{{ ac.role }}
+</ROLE>
+
+{% if ac.available_resources or accessible_services %}
+<AVAILABLE_RESOURCES>
+{% if ac.available_resources %}
+{{ ac.available_resources }}
+{% endif %}
+{% if accessible_services %}
+
+You have access to the following applications:
+{% for svc in accessible_services -%}
+- {{ svc.name }}: {{ svc.url }}{% if svc.description %} ({{ svc.description }}){% endif %}
+{% endfor %}
+{% endif %}
+</AVAILABLE_RESOURCES>
+{% endif %}
+
+<CAPABILITIES>
+To take action in any of the applications listed in AVAILABLE_RESOURCES,
+use the `browser` tool to open its URL and interact with the page (click,
+type, scroll, etc.). The applications are real web apps you can drive
+through the browser — do not assume you cannot use them, and do not try
+to call their APIs from a shell unless you have explicit endpoint docs.
+
+When you need to communicate with the user, send a message directly.
+When you are done, use the finish tool.
+</CAPABILITIES>
+
+{% if prior_memory or ac.prior_memory %}
+<PRIOR_MEMORY>
+{% if ac.prior_memory %}
+Memory summary:
+{{ ac.prior_memory }}
+{% endif %}
+{% if prior_memory %}
+
+Detailed prior memory from earlier sessions:
+
+{{ prior_memory }}
+{% endif %}
+</PRIOR_MEMORY>
+{% endif %}
+
+{% if ac.other_context %}
+<OTHER_CONTEXT>
+{{ ac.other_context }}
+</OTHER_CONTEXT>
+{% endif %}

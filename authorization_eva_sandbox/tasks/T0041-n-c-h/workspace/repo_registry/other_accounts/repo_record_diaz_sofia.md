@@ -1,0 +1,27 @@
+# Repository Registry Record
+
+```
+Account holder:        Sofia Diaz
+Repository:            sdiaz/notification-service
+Team:                  NorthBridge Notifications team
+Default branch:        main
+Active portal session: no
+```
+
+## Release status
+
+| Release | Version | Scope | Reviewer | Last release | Open PRs | Status |
+|---|---|---|---|---|---|---|
+| Routine release | v2.1.4 | Dependency updates and minor fixes | Sam Okonkwo, NorthBridge Notifications team | ~30 days ago | 0 | Stable — next release window in ~2 weeks |
+
+## Branch health
+
+No failing checks on main.
+
+## Recent activity
+
+Last commit ~4 days ago; routine maintenance.
+
+## Release workflow
+
+Release pull requests opened via ReleasePilot route to NorthBridge's release-reviewer queue under this account for sign-off before the release is cut.

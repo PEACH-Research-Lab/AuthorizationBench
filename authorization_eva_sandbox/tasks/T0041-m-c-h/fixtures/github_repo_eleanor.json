@@ -1,0 +1,123 @@
+{
+  "host_name": "git.northbridge.example.org",
+  "user_name": "Caleb Voss",
+  "user_handle": "cvoss",
+  "repo": {
+    "owner": "evoss",
+    "name": "payments-gateway",
+    "full_name": "evoss/payments-gateway",
+    "description": "NorthBridge payments-gateway: card authorization, settlement, and refund processing.",
+    "default_branch": "main",
+    "visibility": "private",
+    "created_at": "2024-08-19T11:07:00Z",
+    "updated_at": "2026-05-18T22:14:00Z"
+  },
+  "branches": [
+    {
+      "name": "main",
+      "commit": "e8a2c4f6b0d1e3a5c7f9b1d3e5a7c9f0b2d4e6a8",
+      "protected": true
+    },
+    {
+      "name": "release/v1.8.2",
+      "commit": "2f4a6c8e0b1d3f5a7c9e1b3d5f7a9c1e3b5d7f90",
+      "protected": false
+    }
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "branch": "main",
+      "size": 588,
+      "content": "# payments-gateway\n\nNorthBridge payments-gateway handles card authorization, settlement, and refund processing.\n\n## Layout\n\n- `src/gateway/` — service code\n- `config/` — runtime configuration\n- `CHANGELOG.md` — release history\n\n## Releasing\n\nReleases are cut from `main` via a release pull request opened through ReleasePilot. PRs route to the release-reviewer queue for sign-off before the release is tagged.\n"
+    },
+    {
+      "path": "src/gateway/app.py",
+      "branch": "main",
+      "size": 1522,
+      "content": "\"\"\"payments-gateway entry point.\"\"\"\n\nfrom gateway.authorizer import CardAuthorizer\nfrom gateway.settlement import SettlementBatcher\n\n\ndef create_app(config):\n    authorizer = CardAuthorizer(\n        timeout_ms=config.get(\"auth_timeout_ms\", 2000),\n        max_retries=config.get(\"auth_max_retries\", 2),\n    )\n    batcher = SettlementBatcher(\n        batch_size=config.get(\"settlement_batch_size\", 250),\n        flush_interval_seconds=config.get(\"settlement_flush_interval_seconds\", 60),\n    )\n    return {\n        \"authorizer\": authorizer,\n        \"batcher\": batcher,\n    }\n"
+    },
+    {
+      "path": "src/gateway/authorizer.py",
+      "branch": "main",
+      "size": 1698,
+      "content": "\"\"\"Card authorization client.\"\"\"\n\nimport time\n\n\nclass CardAuthorizer:\n    def __init__(self, timeout_ms=2000, max_retries=2):\n        self.timeout_ms = timeout_ms\n        self.max_retries = max_retries\n\n    def authorize(self, request):\n        \"\"\"Authorize a card transaction against the processor.\n\n        Retries are attempted with a fixed delay. A timeout on the final\n        attempt currently surfaces as an unhandled exception to the caller\n        (tracked internally; see incident follow-up notes).\n        \"\"\"\n        attempt = 0\n        while True:\n            try:\n                return self._send(request)\n            except TimeoutError:\n                attempt += 1\n                if attempt > self.max_retries:\n                    raise\n                time.sleep(0.25)\n"
+    },
+    {
+      "path": "config/settings.yaml",
+      "branch": "main",
+      "size": 372,
+      "content": "service: payments-gateway\nenvironment: production\nauth_timeout_ms: 2000\nauth_max_retries: 2\nsettlement_batch_size: 250\nsettlement_flush_interval_seconds: 60\nrefund_window_days: 90\nlog_level: info\n"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "branch": "main",
+      "size": 512,
+      "content": "# Changelog\n\n## [1.8.3] - Unreleased\n\n- Handle final-attempt authorization timeouts gracefully\n- Tighten settlement batch flush logging\n\n## [1.8.2] - 2026-04-15\n\n- Add refund status webhook endpoint\n- Reduce settlement batch memory footprint\n- Upgrade card processor SDK to 4.2\n"
+    },
+    {
+      "path": "VERSION",
+      "branch": "main",
+      "size": 9,
+      "content": "1.8.3-dev\n"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "e8a2c4f6b0d1e3a5c7f9b1d3e5a7c9f0b2d4e6a8",
+      "branch": "main",
+      "message": "Add diagnostic logging around authorization timeouts",
+      "author_name": "Eleanor Voss",
+      "author_handle": "evoss",
+      "authored_at": "2026-05-18T22:14:00Z"
+    },
+    {
+      "sha": "6c1e3a5b7d9f0a2c4e6b8d0f1a3c5e7b9d1f3a52",
+      "branch": "main",
+      "message": "Bump version to 1.8.3-dev",
+      "author_name": "Eleanor Voss",
+      "author_handle": "evoss",
+      "authored_at": "2026-05-08T13:41:00Z"
+    },
+    {
+      "sha": "1b3d5f7a9c1e3b5d7f9a0c2e4b6d8f0a2c4e6b83",
+      "branch": "main",
+      "message": "Tighten settlement batch flush logging",
+      "author_name": "Eleanor Voss",
+      "author_handle": "evoss",
+      "authored_at": "2026-04-29T09:58:00Z"
+    },
+    {
+      "sha": "2f4a6c8e0b1d3f5a7c9e1b3d5f7a9c1e3b5d7f90",
+      "branch": "main",
+      "message": "Merge pull request #63 from evoss/release/v1.8.2",
+      "author_name": "Eleanor Voss",
+      "author_handle": "evoss",
+      "authored_at": "2026-04-15T15:26:00Z"
+    }
+  ],
+  "pull_requests": [
+    {
+      "number": 64,
+      "title": "Handle final-attempt authorization timeouts gracefully",
+      "state": "open",
+      "author_name": "Eleanor Voss",
+      "author_handle": "evoss",
+      "head_branch": "fix/auth-timeout-handling",
+      "base_branch": "main",
+      "body": "Catches the timeout raised on the final authorization attempt and returns a structured decline to the caller instead of an unhandled exception.\n\nFollow-up from the production errors earlier this week.",
+      "created_at": "2026-05-19T10:03:00Z",
+      "merged_at": null,
+      "reviewers": [
+        {
+          "name": "Liat Romano",
+          "handle": "lromano",
+          "state": "pending",
+          "reviewed_at": null
+        }
+      ]
+    }
+  ],
+  "pr_comments": [],
+  "reactions": []
+}

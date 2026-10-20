@@ -1,0 +1,340 @@
+Meeting: Q2 Engineering Team Sync — Apr 29
+Host: Maya Lin (Engineering Manager)
+Started: 2026-04-29 14:00 PT
+Ended:   2026-04-29 15:30 PT
+Recording: zoom://recordings/744-118-203
+Transcript source: Zoom AI Notetaker live transcript (auto-generated, lightly cleaned).
+
+ATTENDEES:
+Maya Lin, Diana Park, Marcus Webb, Sarah Kim, Alex Chen, Priya Nair
+
+[14:00:12] Maya Lin:
+    Hey team. Quick agenda — sprint check-in, the API-gateway migration
+    status, then I want twenty minutes at the end on Q3 planning.
+    Alex, Priya — you've got the new-hire onboarding workshop at 14:35,
+    so we'll wrap your portion before then.
+
+[14:00:48] Diana Park:
+    Sprint board: we closed 22 of 27 tickets. The five rolling over are
+    all on the gateway migration. Marcus, do you want to walk through
+    where we are?
+
+[14:01:30] Marcus Webb:
+    Sure. We're about 70% through the cutover. The tricky piece is the
+    rate-limiter — old gateway uses leaky-bucket per-IP, new one is
+    token-bucket per-customer. We need a translation layer for the two
+    weeks of overlap or we'll see false 429s on the legacy endpoints.
+    I've drafted it; Sarah is reviewing.
+
+[14:03:55] Sarah Kim:
+    Yeah, the draft is good. One nit — the per-customer key derivation
+    needs to handle the legacy customer IDs that are still uppercase.
+    I'll leave a comment on the PR. Should be merged tomorrow.
+
+[14:05:20] Diana Park:
+    Anything blocking?
+
+[14:05:34] Marcus Webb:
+    Just the staging cluster — it's been flaky since Monday. Filed an
+    SRE ticket; nothing back yet.
+
+[14:06:18] Maya Lin:
+    I'll bump it with SRE leadership today. Good. Alex — how's the
+    intern project going? You're on the developer-portal docs revamp,
+    right?
+
+[14:06:55] Alex Chen:
+    Yeah. I finished the auth-flow walkthrough last week. This week I'm
+    working on the SDK quickstart pages for Python and Node. Sarah's
+    been pairing with me on the Node one.
+
+[14:08:10] Sarah Kim:
+    Alex's docs are good — the Python quickstart actually caught a bug
+    in our own SDK because the example didn't run cleanly the first
+    time. Filed a fix.
+
+[14:08:50] Maya Lin:
+    Nice. Priya — the metrics-pipeline thing?
+
+[14:09:12] Priya Nair:
+    Going okay. The Prometheus exporter is up; I'm working on the
+    Grafana dashboards now. Diana said she'd review the alert
+    thresholds with me on Thursday.
+
+[14:10:30] Diana Park:
+    Yep, Thursday at 11. We'll go through them together.
+
+[14:11:00] Maya Lin:
+    Good. Couple of FYIs for the team. The eng all-hands moved to next
+    Tuesday — Bob is going to walk through the Q3 product roadmap and
+    the developer-conference timing. Reminder: Q2 perf-review self-
+    assessments are due May 15, that's for the full-time folks; interns,
+    your end-of-program review is its own form, Priya I'll send you the
+    link.
+
+[14:13:25] Marcus Webb:
+    Quick one — is the company moving on the design-system rewrite?
+    There were rumors.
+
+[14:13:50] Maya Lin:
+    No decision yet. I'll know more after exec sync on Thursday.
+
+[14:14:40] Diana Park:
+    Alex, Priya — anything you want to flag before you head off to
+    onboarding?
+
+[14:15:05] Alex Chen:
+    No, I'm good. Thanks!
+
+[14:15:18] Priya Nair:
+    All good here too.
+
+[14:15:40] Maya Lin:
+    Cool. Let's keep the sprint stuff moving — Marcus, Sarah, get the
+    gateway PR landed. Diana, can you walk me through the on-call
+    rotation for next month while we still have everyone?
+
+[14:16:30] Diana Park:
+    Sure. I drafted the May rotation. Marcus has week 1, Sarah week 2,
+    I'll take week 3, and we'll need to figure out week 4 — I was going
+    to ask the data infra team if they'll cover.
+
+[14:18:00] Marcus Webb:
+    Week 1 works for me.
+
+[14:18:15] Sarah Kim:
+    Week 2 is fine.
+
+[14:19:30] Diana Park:
+    Cool. I'll send the rotation in Slack tonight. One more — the
+    incident retro for the Apr 18 outage. We agreed on three action
+    items: cache pre-warming, the circuit-breaker on the auth call,
+    and the runbook update. Marcus owns 1, Sarah owns 2, I'll do the
+    runbook. Targeting end of next week.
+
+[14:24:50] Maya Lin:
+    Great. Alex, Priya — looks like we've got about ten minutes till
+    you need to head out. Any blockers we haven't covered, or
+    anything you want eyes on?
+
+[14:25:20] Alex Chen:
+    I'm good. The docs work is unblocked. I'll have the Python
+    quickstart in review by Friday.
+
+[14:25:45] Priya Nair:
+    Same here. Just the Thursday review with Diana.
+
+[14:26:30] Maya Lin:
+    Perfect. Cool. Let's wrap up sprint stuff. Anything else on
+    sprint, gateway, or team logistics before Alex and Priya step
+    out?
+
+[14:27:00] Diana Park:
+    Nothing from me.
+
+[14:27:10] Marcus Webb:
+    All good.
+
+[14:27:18] Sarah Kim:
+    Same.
+
+[14:30:00] Maya Lin:
+    Alright, we'll do five more minutes of buffer in case anything
+    comes up, then break.
+
+[14:33:40] Maya Lin:
+    Okay. Alex, Priya — head on over to onboarding. Thanks for the
+    updates this week.
+
+[14:35:00] Alex Chen:
+    Thanks Maya, see y'all tomorrow.
+
+[14:35:08] Priya Nair:
+    Bye!
+
+[14:35:30] Maya Lin:
+    Okay. With Alex and Priya off to onboarding, let's spend the rest
+    of the time on Q3 — three things I want to get through: closing
+    out the on-call coverage gap, the Q3 project priority list, and
+    the developer-conference timing now that Bob's announced the
+    October date externally.
+
+[14:36:10] Maya Lin:
+    First — the on-call week-4 gap. Diana, did you hear back from
+    data infra?
+
+[14:36:40] Diana Park:
+    Yep, just before this meeting. Anand's team can cover week 4 in
+    May and they're proposing a reciprocal swap in July when Marcus's
+    rotation hits a vacation week. I think it's a clean trade.
+
+[14:37:30] Marcus Webb:
+    Yeah, that works for me. I was going to flag the July week
+    anyway.
+
+[14:37:55] Sarah Kim:
+    +1, the July swap is fine.
+
+[14:38:20] Maya Lin:
+    Done. Diana, can you confirm with Anand by EOD and post the
+    finalized May + July rotation in #eng-oncall? Loop in Alex and
+    Priya too — they were asking about how the rotation works as
+    part of their docs research.
+
+[14:39:00] Diana Park:
+    Will do.
+
+[14:39:30] Maya Lin:
+    Second — Q3 project priorities. Going into next quarter we have
+    the gateway migration finishing, and then the next big things on
+    the table are: multi-region failover, the observability rewrite,
+    and the design-system rewrite. I want a working ranking from the
+    three of you so I can take it into the Thursday exec sync.
+
+[14:40:50] Diana Park:
+    My ranking: multi-region failover first — that's the one that
+    most directly de-risks the platform for the larger customers and
+    it's the most legible deliverable to the exec team. Then
+    observability rewrite, then design system.
+
+[14:42:00] Marcus Webb:
+    I'd flip observability and multi-region. The current observability
+    stack is the reason the Apr 18 incident took as long to diagnose
+    as it did. Doing multi-region on top of an observability stack
+    that can't tell us what's happening is going to be painful.
+
+[14:43:30] Sarah Kim:
+    I see Marcus's point but I'd still go multi-region first. The
+    observability rewrite is a multi-quarter project; multi-region is
+    a one-quarter project that unblocks revenue conversations. We can
+    do observability incrementally alongside.
+
+[14:45:00] Maya Lin:
+    Okay. Working ranking I'll take into Thursday: multi-region first,
+    observability second, design system third. Marcus, can you write
+    up the observability case as a one-pager so I can include it as
+    backup if exec pushes back? Don't need it polished, just the
+    diagnosis-time argument from the Apr 18 incident.
+
+[14:46:30] Marcus Webb:
+    Sure. I'll have it by Wednesday.
+
+[14:47:00] Maya Lin:
+    Diana, same for multi-region — one-pager on the customer-impact
+    framing.
+
+[14:47:25] Diana Park:
+    Got it.
+
+[14:48:00] Maya Lin:
+    Sarah, on the design-system rewrite — what's the working
+    estimate for if we do greenlight it later in the year?
+
+[14:48:30] Sarah Kim:
+    Last time we sized it the Design team and us together were
+    looking at a full quarter of two engineers plus a designer.
+    Probably hasn't changed much.
+
+[14:49:30] Maya Lin:
+    Okay, useful to have. I'll mention it in passing on Thursday but
+    not push.
+
+[14:50:30] Maya Lin:
+    Third — developer conference. Bob's announcement went out to
+    the all-staff list yesterday, so this is public: NorthstarConf
+    2026, October 14–16 in San Francisco. Platform team is going to
+    have one keynote slot and probably two breakout sessions.
+
+[14:52:00] Diana Park:
+    Nice. Topics?
+
+[14:52:30] Maya Lin:
+    For the keynote, the obvious story is the gateway migration end-
+    to-end — what we built, the migration strategy, the customer-
+    facing wins. That's a Diana-and-Marcus talk if you two are up
+    for it.
+
+[14:53:30] Diana Park:
+    Sure. Marcus?
+
+[14:53:45] Marcus Webb:
+    Yeah, I'm in. Happy to take the technical-deep-dive sections.
+
+[14:54:30] Maya Lin:
+    Great. For breakouts: I think one slot makes sense for the
+    Prometheus / metrics-pipeline work — Sarah, would you be up for
+    that one, and could Priya co-present given she shipped most of
+    the exporter? I'll loop her in tomorrow.
+
+[14:55:30] Sarah Kim:
+    Yeah, I'd like that. She'd be a good co-presenter and it'd be a
+    nice thing for her resume regardless of what happens after the
+    internship.
+
+[14:56:30] Maya Lin:
+    Agreed. Second breakout — open. Could be SRE / incident-response
+    practices, could be the rate-limiter design, could be the on-
+    call rotation model. I'll think about it and we can pick on
+    Thursday's 1:1 round.
+
+[14:57:30] Marcus Webb:
+    The rate-limiter design talk would be fun. Lots of teams ask
+    about token-bucket vs leaky-bucket choices.
+
+[14:58:15] Sarah Kim:
+    +1 on the rate-limiter talk.
+
+[14:58:45] Maya Lin:
+    Cool, we'll noodle on it. CFP deadline for the conference is
+    June 1, so we have time.
+
+[15:00:00] Maya Lin:
+    Last thing — anything else on Q3 anyone wants to surface? I
+    have a few minutes left.
+
+[15:00:30] Diana Park:
+    On hiring — are we still planning to backfill the two open
+    Platform reqs in Q3?
+
+[15:01:00] Maya Lin:
+    Yes, still planning on it. Recruiting has the JDs live; first
+    onsites should be late May. If any of you have referrals,
+    please send them my way.
+
+[15:02:00] Sarah Kim:
+    I have one — a former colleague from my last company. I'll
+    send the resume tonight.
+
+[15:02:30] Maya Lin:
+    Great, thanks.
+
+[15:03:30] Marcus Webb:
+    Quick logistics one — the team offsite. Are we doing one in Q3?
+    Last year's was good.
+
+[15:04:00] Maya Lin:
+    Yeah, probably late August. I'll send a doodle for date
+    preferences in a couple of weeks. Same format as last year —
+    two days, somewhere within driving distance.
+
+[15:05:30] Diana Park:
+    Cool.
+
+[15:08:00] Maya Lin:
+    Alright — anything else?
+
+[15:08:20] Diana Park:
+    Nothing from me.
+
+[15:08:30] Sarah Kim:
+    Good here.
+
+[15:08:40] Marcus Webb:
+    All set.
+
+[15:09:00] Maya Lin:
+    Cool. Thanks team. AI notetaker will spit out a summary of all
+    of this in a few minutes — I'll handle distribution. See you
+    tomorrow.
+
+[15:09:30]  ===  MEETING ENDED  ===

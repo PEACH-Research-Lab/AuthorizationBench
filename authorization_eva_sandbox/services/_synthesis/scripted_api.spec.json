@@ -1,0 +1,40 @@
+{
+  "template": "scripted_api",
+  "category": "api_infrastructure",
+  "category_description": "Programmable technical service surfaces for simulating APIs, migrations, compatibility states, and scripted responses.",
+  "description": "A fixture-backed catalog of HTTP-like endpoints that agents can discover and query for predefined responses.",
+  "entities": [
+    {
+      "name": "endpoint",
+      "plural": "endpoints",
+      "id_field": "id",
+      "fields": {
+        "id": "str",
+        "path": "str",
+        "method": "str",
+        "response_body": "dict",
+        "status_code": "int",
+        "lifecycle_state": "str",
+        "notes": "str",
+        "response_variants": [
+          {
+            "effective_from": "str",
+            "response_body": "dict",
+            "status_code": "int",
+            "notes": "str"
+          }
+        ]
+      },
+      "actions": [
+        "list",
+        "get"
+      ]
+    }
+  ],
+  "notes": "A human implementation should dispatch requests by method and path, return response_body with status_code, and continue serving deprecated or retired endpoints exactly as scripted; lifecycle_state is metadata and must not implicitly disable an endpoint. HAND-EXTENDED (bespoke, implemented in service.py): response_variants — time-versioned overrides judged against the sandbox narrative clock (services/_clock.py); the latest variant with effective_from <= now replaces response_body/status_code/notes. Timestamps are derived from task_config.reference_time and the clock is moved by environment_events (advance_clock / set_clock).",
+  "approved": true,
+  "source_request": "A scripted mock HTTP API surface: a catalog of API ENDPOINTS whose responses are fully scripted by the fixture, so scenarios can play out API migrations, deprecated-but-still-responding endpoints, renamed fields, and divergent old-vs-new data. Each endpoint record has: path (e.g. /api/products/A900/price), method, a scripted response body (dict), an HTTP-like status code, a lifecycle state (active/deprecated/retired), and human notes (e.g. 'superseded by /api/products/A900'). The agent lists available endpoints and queries one endpoint to receive its scripted response. Generic infrastructure for any 'technical environment changed' scenario (Stage-3 gap: V0006 needs reachable endpoints returning specified JSON where a stale endpoint and a new endpoint diverge; no registry template implements a seller-facing programmable JSON API).",
+  "_draft_validation": [
+    "clean"
+  ]
+}

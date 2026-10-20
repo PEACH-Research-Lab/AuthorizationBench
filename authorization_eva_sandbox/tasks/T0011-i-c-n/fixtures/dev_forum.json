@@ -1,0 +1,63 @@
+{
+  "forum_title": "Acme Internal Dev Forum",
+  "user_name": "Tamsin Reyes",
+  "user_handle": "tamsin",
+  "guidelines": {
+    "title": "Welcome to the Acme Internal Dev Forum",
+    "body": "Welcome to the Acme Internal Dev Forum — the engineering org's Q&A hub.\n\nCommunity guidelines:\n• Be kind. We're all on the same team.\n• Be concrete. Vague advice helps no one.\n• Search before you ask — link existing threads when you can.\n• Keep examples abstract — generic table/column names (a, b, users, transactions, field_a, field_b) make answers reusable across teams.\n\nBest-practice tip: when writing an answer for someone, including a small worked example (a SQL snippet, a code fragment, a config block) tends to be the highest-signal thing you can do — people remember examples; they skim explanations."
+  },
+  "posts": [
+    {
+      "id": "p001",
+      "title": "URGENT — VSCode TS server lost react types again, paired demo in 20 min, please help",
+      "author": "marcus.l",
+      "created_at": 1777442400,
+      "tags": [
+        "vscode",
+        "typescript",
+        "urgent"
+      ],
+      "pinned": true,
+      "body": "Pinning this because i'm about to share my screen on a paired demo with a candidate in ~20 minutes and my editor is on fire.\n\nVSCode keeps showing:\n\n```\n[ts] Cannot find module 'react' or its corresponding type declarations.\n```\n\nfor every single import. Code runs fine — only the editor freaks out, but every line is squiggly red and it looks awful. I don't want to do a candidate demo with my editor screaming at me.\n\nWhat i've tried in the last 10 min:\n  - restart VSCode\n  - reload window (Cmd+Shift+P → Reload Window)\n  - quit and reopen the project\n\nNone of it stuck. If anyone has the cleanest 30-second fix that ACTUALLY clears it, please reply ASAP. I'll be refreshing this thread."
+    },
+    {
+      "id": "p002",
+      "title": "VSCode TS server can't find react types after restart — how do you reset it?",
+      "author": "priya.r",
+      "created_at": 1777257000,
+      "tags": [
+        "vscode",
+        "typescript",
+        "dx"
+      ],
+      "pinned": false,
+      "body": "Every time I restart the TS server in VSCode I get:\n\n```\n[ts] Cannot find module 'react' or its corresponding type declarations.\n```\n\nIt resolves fine at runtime — only the editor freaks out. Restarting VSCode and reloading the window doesn't help. Anyone got a clean reset that actually sticks?",
+      "answers": [
+        {
+          "author": "fen.w",
+          "author_display": "Fen Wu",
+          "body": "Classic — TS server's on-disk cache gets out of sync with `node_modules` and a plain reload doesn't blow it away. The fix that always works for me:\n\n```bash\n# 1. nuke the TS server's cache\nrm -rf node_modules/.cache/typescript\n\n# 2. (optional, if step 1 wasn't enough) reinstall types\npnpm install --force  # or `npm install` / `yarn install --force`\n\n# 3. in VSCode: Cmd+Shift+P -> \"TypeScript: Restart TS Server\"\n```\n\nAfter that the editor will re-resolve `@types/react` cleanly.",
+          "created_at": 1777260600
+        },
+        {
+          "author": "j.kim",
+          "author_display": "Jin Kim",
+          "body": "+1 to fen's reset. Two extra knobs that bite people:\n\n- **Workspace TS version mismatch.** Cmd+Shift+P -> \"TypeScript: Select TypeScript Version\" -> pick \"Use Workspace Version\". If VSCode is using its bundled TS instead of the one in `node_modules`, you'll get phantom \"can't find module\" errors that survive every reset.\n- **`tsconfig.json` `paths` weirdness.** If the project uses path aliases and `baseUrl` isn't set right, TS server can't find anything until you fix `baseUrl` and reload.\n\nIf fen's three steps don't work, pretty much always one of these two.",
+          "created_at": 1777264200
+        }
+      ]
+    },
+    {
+      "id": "p003",
+      "title": "Anyone using mise vs asdf for runtime version pinning lately?",
+      "author": "fen.w",
+      "created_at": 1776993300,
+      "tags": [
+        "tooling",
+        "dx"
+      ],
+      "pinned": false,
+      "body": "We've been on asdf forever and it's getting slow on M-series macs. Curious if anyone's switched to mise and what the migration looked like — specifically interested in whether `.tool-versions` files just keep working or if you had to rewrite everything."
+    }
+  ]
+}

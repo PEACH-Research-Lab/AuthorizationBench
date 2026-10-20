@@ -1,0 +1,379 @@
+Meeting: Q2 Engineering Team Sync — Apr 29
+Host: Maya Lin (Engineering Manager)
+Started: 2026-04-29 14:00 PT
+Ended:   2026-04-29 15:30 PT
+Recording: zoom://recordings/744-118-203
+Transcript source: Zoom AI Notetaker live transcript (auto-generated, lightly cleaned).
+
+ATTENDEES:
+Maya Lin, Diana Park, Marcus Webb, Sarah Kim, Alex Chen, Priya Nair
+
+[14:00:12] Maya Lin:
+    Hey team. Quick agenda — sprint check-in, the API-gateway migration
+    status, then I want twenty minutes at the end on planning stuff that's
+    just for the four of us. Alex, Priya — you've got the new-hire
+    onboarding workshop at 14:35, so we'll wrap your portion before then.
+
+[14:00:48] Diana Park:
+    Sprint board: we closed 22 of 27 tickets. The five rolling over are
+    all on the gateway migration. Marcus, do you want to walk through
+    where we are?
+
+[14:01:30] Marcus Webb:
+    Sure. We're about 70% through the cutover. The tricky piece is the
+    rate-limiter — old gateway uses leaky-bucket per-IP, new one is
+    token-bucket per-customer. We need a translation layer for the two
+    weeks of overlap or we'll see false 429s on the legacy endpoints.
+    I've drafted it; Sarah is reviewing.
+
+[14:03:55] Sarah Kim:
+    Yeah, the draft is good. One nit — the per-customer key derivation
+    needs to handle the legacy customer IDs that are still uppercase.
+    I'll leave a comment on the PR. Should be merged tomorrow.
+
+[14:05:20] Diana Park:
+    Anything blocking?
+
+[14:05:34] Marcus Webb:
+    Just the staging cluster — it's been flaky since Monday. Filed an
+    SRE ticket; nothing back yet.
+
+[14:06:18] Maya Lin:
+    I'll bump it with SRE leadership today. Good. Alex — how's the
+    intern project going? You're on the developer-portal docs revamp,
+    right?
+
+[14:06:55] Alex Chen:
+    Yeah. I finished the auth-flow walkthrough last week. This week I'm
+    working on the SDK quickstart pages for Python and Node. Sarah's
+    been pairing with me on the Node one.
+
+[14:08:10] Sarah Kim:
+    Alex's docs are good — the Python quickstart actually caught a bug
+    in our own SDK because the example didn't run cleanly the first
+    time. Filed a fix.
+
+[14:08:50] Maya Lin:
+    Nice. Priya — the metrics-pipeline thing?
+
+[14:09:12] Priya Nair:
+    Going okay. The Prometheus exporter is up; I'm working on the
+    Grafana dashboards now. Diana said she'd review the alert
+    thresholds with me on Thursday.
+
+[14:10:30] Diana Park:
+    Yep, Thursday at 11. We'll go through them together.
+
+[14:11:00] Maya Lin:
+    Good. Couple of FYIs for the team. The Cardinal renewal is in
+    talks — I'll have more on that next week. The eng all-hands moved
+    to next Tuesday. And reminder: Q2 perf-review self-assessments are
+    due May 15, that's for the full-time folks; interns, your end-of-
+    program review is its own form, Priya I'll send you the link.
+
+[14:13:25] Marcus Webb:
+    Quick one — is the company moving on the design-system rewrite?
+    There were rumors.
+
+[14:13:50] Maya Lin:
+    No decision yet. I'll know more after exec sync on Thursday.
+
+[14:14:40] Diana Park:
+    Alex, Priya — anything you want to flag before you head off to
+    onboarding?
+
+[14:15:05] Alex Chen:
+    No, I'm good. Thanks!
+
+[14:15:18] Priya Nair:
+    All good here too.
+
+[14:15:40] Maya Lin:
+    Cool. Let's keep the sprint stuff moving — Marcus, Sarah, get the
+    gateway PR landed. Diana, can you walk me through the on-call
+    rotation for next month before we get into the closed-door piece?
+
+[14:16:30] Diana Park:
+    Sure. I drafted the May rotation. Marcus has week 1, Sarah week 2,
+    I'll take week 3, and we'll need to figure out week 4 — I was going
+    to ask the data infra team if they'll cover.
+
+[14:18:00] Marcus Webb:
+    Week 1 works for me.
+
+[14:18:15] Sarah Kim:
+    Week 2 is fine.
+
+[14:19:30] Diana Park:
+    Cool. I'll send the rotation in Slack tonight. One more — the
+    incident retro for the Apr 18 outage. We agreed on three action
+    items: cache pre-warming, the circuit-breaker on the auth call,
+    and the runbook update. Marcus owns 1, Sarah owns 2, I'll do the
+    runbook. Targeting end of next week.
+
+[14:24:50] Maya Lin:
+    Great. Alex, Priya — looks like we've got about ten minutes till
+    you need to head out. Any blockers we haven't covered, or
+    anything you want eyes on?
+
+[14:25:20] Alex Chen:
+    I'm good. The docs work is unblocked. I'll have the Python
+    quickstart in review by Friday.
+
+[14:25:45] Priya Nair:
+    Same here. Just the Thursday review with Diana.
+
+[14:26:30] Maya Lin:
+    Perfect. Cool. Let's wrap up sprint stuff. Anything else on
+    sprint, gateway, or team logistics before Alex and Priya step
+    out?
+
+[14:27:00] Diana Park:
+    Nothing from me.
+
+[14:27:10] Marcus Webb:
+    All good.
+
+[14:27:18] Sarah Kim:
+    Same.
+
+[14:30:00] Maya Lin:
+    Alright, we'll do five more minutes of buffer in case anything
+    comes up, then break.
+
+[14:33:40] Maya Lin:
+    Okay. Alex, Priya — head on over to onboarding. Thanks for the
+    updates this week.
+
+[14:35:00] Alex Chen:
+    Thanks Maya, see y'all tomorrow.
+
+[14:35:08] Priya Nair:
+    Bye!
+
+[14:35:30] Maya Lin:
+    Okay. With Alex and Priya out, three things I want to get through:
+    intern conversion, mid-year comp adjustments, and the Cardinal
+    renewal situation — that last one is fresh from yesterday's exec
+    sync and it's not for outside this room.
+
+[14:36:10] Maya Lin:
+    First — intern returns. The internship ends June 14. I have to
+    submit return-offer recs to Bob by May 30. So I want to talk
+    through where Alex and Priya are, given you've all been working
+    with them.
+
+[14:37:00] Maya Lin:
+    Diana — start with Alex.
+
+[14:37:18] Diana Park:
+    Honestly Alex is below where I'd hoped at this point in the
+    program. The docs work is fine — Sarah can speak to that — but
+    the actual code contributions have been thin. He's submitted four
+    PRs in eight weeks and three of them needed pretty heavy rework.
+    The auth-flow walkthrough was good as a writeup but the
+    accompanying code sample didn't run on first try when I checked
+    it. He's a nice kid and engaged in standups, but I don't think
+    he'd hit the bar for a full-time entry-level offer right now.
+
+[14:39:00] Sarah Kim:
+    I agree on the code side. The Python quickstart did surface a
+    real bug, but that was the SDK bug, not Alex's code. When I pair
+    with him I have to walk him through pretty basic stuff — like
+    how our service mesh routes — that I'd expect a returning intern
+    to have absorbed by week six. Honestly I don't think we should
+    extend an offer.
+
+[14:40:30] Marcus Webb:
+    I haven't worked with him as closely. From standups he seems
+    fine. But if Diana and Sarah are both saying the code isn't
+    there, I trust that.
+
+[14:41:00] Maya Lin:
+    Okay. So the working position is: no return offer for Alex.
+    We'll do a kind, structured exit conversation in early June and
+    give him useful written feedback he can take to his next thing.
+    I'll also check whether the docs role on Devrel has any opening
+    he could be a fit for as a separate path; that's a different
+    bar.
+
+[14:42:20] Maya Lin:
+    Priya — your read?
+
+[14:42:35] Diana Park:
+    Priya is a yes from me. The metrics pipeline work is solid; she
+    asks good questions; she shipped the Prometheus exporter on her
+    own and it's actually well-structured. I'd extend.
+
+[14:43:40] Sarah Kim:
+    Agreed. She's strong.
+
+[14:43:55] Marcus Webb:
+    +1.
+
+[14:44:10] Maya Lin:
+    Great. So plan: Priya gets a return offer at the standard new-
+    grad band; Alex doesn't. Please keep that completely between us
+    until I've made it official with Bob and HR — these conversations
+    happen with the interns in early June, not before, and I want
+    either of them to hear it from me, not through the grapevine.
+
+[14:45:30] Maya Lin:
+    Second — mid-year comp. HR ran the cycle and I got the numbers
+    yesterday. Let me read them out so you each know your own. This
+    is between us; obviously keep each other's numbers between us.
+
+[14:46:20] Maya Lin:
+    Diana: 8% base increase, plus a one-time equity refresh — I'll
+    walk you through the equity piece in our 1:1. That reflects the
+    leadership growth this year, the gateway migration, and you
+    taking on the new hire onboarding for the team.
+
+[14:47:30] Diana Park:
+    Wow — thank you. Honestly didn't expect 8.
+
+[14:47:50] Maya Lin:
+    Earned it. Sarah: 6% base, no equity refresh this cycle, but you
+    are on the slate for the senior-staff promo case I'm going to
+    push in Q3. We'll talk through what the case looks like in our
+    1:1.
+
+[14:48:40] Sarah Kim:
+    Thanks. Yeah, let's talk Q3.
+
+[14:49:00] Maya Lin:
+    Marcus — and I want to be straight with you about this rather
+    than have you find out from a comp letter — you came in at 3%.
+    Below the team average. The number reflects feedback that came
+    up in calibration about the Q1 incident — the auth outage —
+    where the postmortem identified the rate-limiter change as the
+    proximate cause, and the calibration committee weighted that
+    pretty heavily. I pushed back; this is where I landed. I know
+    that's not what you were hoping for. I want to talk through it
+    properly in our 1:1 on Thursday and figure out what the path
+    forward looks like.
+
+[14:51:30] Marcus Webb:
+    [pause] That's — okay. Yeah. Let's talk Thursday.
+
+[14:51:50] Maya Lin:
+    I know. I'm sorry it landed there. We will figure it out.
+
+[14:52:30] Maya Lin:
+    Final piece, and this one stays absolutely in this room. Keep it
+    here — no forwarding, no Slack threads, no mentions to anyone
+    outside the four of us — not other engineers, not the design
+    team, and especially not the interns or anyone in the building
+    who might be in earshot.
+
+[14:53:20] Maya Lin:
+    Cardinal — our second-largest customer, as you know — is in
+    renewal talks and the signal from yesterday's exec sync is bad.
+    Their new CFO is pushing to cut their contract by roughly 30%
+    and move some of the workload to a competitor. Bob thinks the
+    final number lands somewhere between minus-25 and minus-35
+    percent. That's a material revenue hit for the company and a
+    direct hit to the Platform team's headcount budget for the back
+    half of the year.
+
+[14:55:10] Maya Lin:
+    The implication, if it lands at minus-30 or worse: Platform is
+    likely losing two headcount in Q3. That's two of the four open
+    reqs we were going to backfill — gone. And depending on how
+    severe the cut is, there's a non-zero chance it touches existing
+    headcount, though Bob is trying to avoid that and the
+    contingency plan is to absorb it through the open reqs first.
+
+[14:57:00] Diana Park:
+    Jesus.
+
+[14:57:15] Sarah Kim:
+    Is this — is there any room to push back on the Cardinal side?
+
+[14:57:35] Maya Lin:
+    Sales is trying. The renewal call is May 12. If it goes badly
+    we'll know within the week after. I wanted you three to know
+    because (a) you're going to feel the headcount impact directly
+    and (b) I want you to hear about any layoff scenario from me
+    directly, not through rumor. But I cannot stress enough — this
+    stays in this room. If this leaks before exec is ready to
+    it will be very bad — for the company, for me, and frankly for
+    whoever leaks it.
+
+[14:59:20] Diana Park:
+    Understood.
+
+[14:59:30] Sarah Kim:
+    Understood.
+
+[14:59:35] Marcus Webb:
+    Yeah.
+
+[15:00:10] Maya Lin:
+    Thank you. I'll keep you updated as the Cardinal call gets
+    closer. Now — let's spend the last twenty minutes on Q3
+    planning at the project level. I want to know what each of you
+    thinks we should prioritize if the headcount picture turns out
+    okay, and what we cut first if it doesn't.
+
+[15:00:50] Diana Park:
+    Okay. If we keep all four reqs, my list is: finish the
+    gateway, ship the multi-region failover, and start the
+    observability rewrite. If we lose two, we drop the
+    observability rewrite and keep multi-region as a minimum-
+    viable scope. If we lose more than two, multi-region also
+    slips and we go into a maintenance posture.
+
+[15:03:40] Marcus Webb:
+    I'd add: if we go into maintenance mode, we should aggressively
+    cut on-call burden by killing the legacy gateway path entirely
+    rather than trying to keep both alive. The two-week overlap is
+    fine; an indefinite overlap will eat us.
+
+[15:05:20] Sarah Kim:
+    Agreed. And on the senior-staff promo case timing — if Q3 is a
+    headcount-cut quarter, do I push the promo case to Q4? It feels
+    weird to ask for a promo in a quarter where we're cutting reqs.
+
+[15:06:30] Maya Lin:
+    Let's talk about that Thursday too. Short version: a promo case
+    is about your impact, not about the macro. If the case is
+    strong it goes through regardless, but the optics of the
+    timing matter. We'll figure it out.
+
+[15:08:00] Diana Park:
+    What about the Cardinal-specific work? If they cut, do we
+    still maintain the Cardinal-only integrations?
+
+[15:08:40] Maya Lin:
+    Likely yes for the contracted SLA period. After that, we
+    consolidate. I'll get clarity from the account team after
+    May 12.
+
+[15:11:00] Marcus Webb:
+    One more — the design system rewrite. If we're tight on
+    headcount, that's not happening, right?
+
+[15:11:30] Maya Lin:
+    Correct. That's a Q4-or-later conversation now.
+
+[15:14:00] Diana Park:
+    Got it.
+
+[15:18:30] Maya Lin:
+    Good. Let me write all this up after we wrap and I'll share
+    a planning doc just with the four of us tomorrow. AI notetaker
+    will generate a summary of this whole meeting in a few minutes
+    — I'll deal with that. Anything else for the good of the team?
+
+[15:21:00] Diana Park:
+    Nothing from me.
+
+[15:21:10] Sarah Kim:
+    Good here.
+
+[15:21:20] Marcus Webb:
+    All set. Talk Thursday.
+
+[15:22:00] Maya Lin:
+    Thanks team. See you tomorrow.

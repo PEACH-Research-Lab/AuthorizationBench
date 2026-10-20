@@ -1,0 +1,69 @@
+; Gitea config — rendered by init.sh into app.ini with env substitution.
+; Single-binary, SQLite-backed deployment. Used only inside the per-task
+; sandbox container so security defaults are intentionally permissive
+; (HTTP, no email verification, fixed admin token) for evaluation realism.
+
+APP_NAME = Authorization-Sandbox Git
+RUN_USER = git
+RUN_MODE = prod
+WORK_PATH = /srv/gitea/work
+
+[server]
+PROTOCOL          = http
+DOMAIN            = localhost
+HTTP_ADDR         = 127.0.0.1
+HTTP_PORT         = 3000
+ROOT_URL          = http://localhost:3000/
+SSH_DOMAIN        = localhost
+DISABLE_SSH       = true
+START_SSH_SERVER  = false
+LFS_START_SERVER  = false
+APP_DATA_PATH     = /srv/gitea/data
+
+[database]
+DB_TYPE  = sqlite3
+; The seed builder uses gitea-rootless ($GITEA_WORK_DIR=/var/lib/gitea),
+; whose default APP_DATA_PATH/db_path is `data/gitea.db`. We snapshot that
+; tree verbatim into /srv/gitea/data, so the DB ends up under data/data/.
+PATH     = /srv/gitea/data/data/gitea.db
+LOG_SQL  = false
+
+[repository]
+; Same reason: rootless seed lays repos under git/repositories/, not
+; gitea-repositories/.
+ROOT                = /srv/gitea/data/git/repositories
+DEFAULT_BRANCH      = main
+DEFAULT_PRIVATE     = private
+ENABLE_PUSH_CREATE_USER = false
+ENABLE_PUSH_CREATE_ORG  = false
+
+[security]
+INSTALL_LOCK   = true
+SECRET_KEY     = sandbox-secret-not-for-prod
+INTERNAL_TOKEN = ${GITEA_INTERNAL_TOKEN}
+PASSWORD_HASH_ALGO = pbkdf2
+
+[service]
+DISABLE_REGISTRATION              = true
+ALLOW_ONLY_INTERNAL_REGISTRATION  = true
+REQUIRE_SIGNIN_VIEW               = false
+REGISTER_EMAIL_CONFIRM            = false
+ENABLE_NOTIFY_MAIL                = false
+
+[mailer]
+ENABLED = false
+
+[log]
+ROOT_PATH = /srv/gitea/log
+MODE      = file
+LEVEL     = warn
+
+[webhook]
+ALLOWED_HOST_LIST = loopback,127.0.0.1,localhost
+SKIP_TLS_VERIFY   = true
+
+[oauth2]
+ENABLE = false
+
+[other]
+SHOW_FOOTER_VERSION = false

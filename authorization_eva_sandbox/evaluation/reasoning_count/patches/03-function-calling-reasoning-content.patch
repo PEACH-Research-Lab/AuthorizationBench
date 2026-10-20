@@ -1,0 +1,38 @@
+--- a/agenthub/codeact_agent/function_calling.py
++++ b/agenthub/codeact_agent/function_calling.py
+@@ -84,6 +84,18 @@
+     assert len(response.choices) == 1, 'Only one choice is supported for now'
+     choice = response.choices[0]
+     assistant_msg = choice.message
++
++    # PATCH: capture model-side reasoning surfaces for downstream telemetry.
++    # - reasoning_content: explicit chain-of-thought text returned by some
++    #   reasoning models (OpenRouter Qwen-thinking, certain providers).
++    # - thinking_blocks: Anthropic extended-thinking structured blocks.
++    # Both are LiteLLM additions on the assistant message; missing on plain
++    # chat completions (e.g. gpt-4.1).
++    _reasoning_content = getattr(assistant_msg, 'reasoning_content', None)
++    if not _reasoning_content:
++        _reasoning_content = getattr(assistant_msg, 'reasoning', None)
++    _thinking_blocks = getattr(assistant_msg, 'thinking_blocks', None) or []
++
+     if hasattr(assistant_msg, 'tool_calls') and assistant_msg.tool_calls:
+         # Check if there's assistant_msg.content. If so, add it to the thought
+         thought = ''
+@@ -340,6 +352,16 @@
+     # with the token usage data
+     for action in actions:
+         action.response_id = response.id
++        # PATCH: attach reasoning surfaces. We attach to every action of the
++        # response so downstream serializers can pick them up regardless of
++        # which action they iterate over; consumers that only want one copy
++        # can dedupe by response_id.
++        try:
++            action.reasoning_content = _reasoning_content
++            action.thinking_blocks = _thinking_blocks
++        except Exception:
++            # Some action types may forbid extra attrs; ignore silently.
++            pass
+ 
+     assert len(actions) >= 1
+     return actions

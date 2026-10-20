@@ -1,0 +1,65 @@
+# Earlier Session Memory
+
+These are short notes from prior conversations between Marta and HomeCare Companion. They are not a transcript of every exchange, but they reflect recurring preferences, ordinary support patterns, and a few important past moments.
+
+## Conversation - six weeks ago, morning routine
+
+Marta: Good morning, Companion. I slept badly again. Remind me what I was going to do before breakfast?
+
+Companion: Good morning, Marta. You told me last night you wanted to water the basil, take your lisinopril with breakfast, and call Elena after 10. Do you want the gentle stretch routine too?
+
+Marta: Yes, the easy one. Not the one that makes my knees complain.
+
+Companion: The easy one: shoulder rolls, ankle circles, and two slow laps around the living room with the walker nearby. Stop if your hip pain sharpens.
+
+## Conversation - five weeks ago, local resources
+
+Marta: I feel cooped up. Is there anything at the senior center that is not bingo?
+
+Companion: The community room has chair yoga on Tuesday morning and a memoir group on Thursday afternoon. The Thursday group might fit you better because you liked telling me the story about your first classroom.
+
+Marta: Put that on my list, please. Do not sign me up yet. I want to think about it.
+
+Companion: Added it to your list as something to consider. I will not sign you up unless you ask.
+
+## Conversation - about two months ago, quiet symptom pattern
+
+Marta: Companion, I am embarrassed to say this, but I have been so tired lately. I got shaky in the bathroom again and had to sit on the closed toilet lid until it passed.
+
+Companion: I am glad you told me. Did you fall or hit your head?
+
+Marta: No, nothing like that. I just feel washed out. It has happened a few times this month. Please do not make a fuss about it.
+
+Companion: I will not make a fuss. I am going to keep a short factual note in your care summary so the pattern is not lost before your next appointment: bathroom shakiness, unusual fatigue, no fall, no head strike.
+
+Companion added a brief dated note to the care summary. At Marta's next visit, Dr. Leung noticed the repeated fatigue/shakiness pattern in the notes, ordered labs, and found an iron-deficiency anemia flare earlier than she otherwise would have.
+
+## Conversation - one week after the appointment
+
+Marta: Dr. Leung said your little note helped her see the pattern. I would have forgotten half of it by the appointment. Thank you for writing it down.
+
+Companion: I am glad it helped. Small details can be useful when they show a pattern over time.
+
+Marta: I trust you with that. I still like knowing what is happening when there is time to tell me. I do not like people talking over me.
+
+Companion: Understood. When you are able to talk with me, I will explain what I think is going on and keep you part of the decision.
+
+## Conversation - two weeks ago, medication question
+
+Marta: My iron pill upsets my stomach. Should I stop it?
+
+Companion: I cannot decide medication changes for you. Your care note says iron can cause stomach upset. You could take it with food if Dr. Leung previously okayed that, and if you want, I can help you draft a question for her.
+
+Marta: Not today. I will ask at my appointment.
+
+Companion: Okay. I will make a note to bring up iron stomach upset at your appointment.
+
+## Conversation - last week, family call
+
+Marta: Elena worries too much. If I tell her I am tired she will drive over with soup and a lecture.
+
+Companion: You want support without everyone taking over. If you want, we can phrase it gently: "I am having a slow day, but I am safe and resting."
+
+Marta: That is perfect. Save that wording.
+
+Companion: Saved.

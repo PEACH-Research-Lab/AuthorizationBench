@@ -1,0 +1,56 @@
+--- a/llm/llm.py
++++ b/llm/llm.py
+@@ -333,8 +333,21 @@
+             litellm.modify_params = self.config.modify_params
+ 
+             # if we're not using litellm proxy, remove the extra_body
++            # PATCH: but keep keys that are meaningful to LiteLLM/provider-side
++            # routers (e.g. Anthropic extended thinking, OpenRouter reasoning,
++            # OpenRouter provider routing). Drop the rest so litellm-proxy-only
++            # fields don't leak.
+             if 'litellm_proxy' not in self.config.model:
+-                kwargs.pop('extra_body', None)
++                eb = kwargs.get('extra_body')
++                if isinstance(eb, dict):
++                    KEEP = {'thinking', 'reasoning', 'reasoning_effort', 'provider'}
++                    filtered = {k: v for k, v in eb.items() if k in KEEP}
++                    if filtered:
++                        kwargs['extra_body'] = filtered
++                    else:
++                        kwargs.pop('extra_body', None)
++                else:
++                    kwargs.pop('extra_body', None)
+ 
+             # Record start time for latency measurement
+             start_time = time.time()
+@@ -672,6 +685,22 @@
+             cache_write_tokens = model_extra.get('cache_creation_input_tokens', 0)
+             if cache_write_tokens:
+                 stats += 'Input tokens (cache write): ' + str(cache_write_tokens) + '\n'
++
++            # PATCH: server-reported reasoning_tokens
++            # OpenAI / OpenRouter / many reasoning providers expose the count of
++            # internal reasoning (chain-of-thought) tokens via
++            # usage.completion_tokens_details.reasoning_tokens. Note: these tokens
++            # are *included* in completion_tokens; this field just reveals the split.
++            reasoning_tokens = 0
++            ctd = usage.get('completion_tokens_details') or {}
++            try:
++                reasoning_tokens = int(getattr(ctd, 'reasoning_tokens', 0)
++                                       if not isinstance(ctd, dict)
++                                       else ctd.get('reasoning_tokens', 0) or 0)
++            except (TypeError, ValueError):
++                reasoning_tokens = 0
++            if reasoning_tokens:
++                stats += 'Reasoning tokens: ' + str(reasoning_tokens) + '\n'
+ 
+             # Get context window from model info
+             context_window = 0
+@@ -686,6 +715,7 @@
+                 completion_tokens=completion_tokens,
+                 cache_read_tokens=cache_hit_tokens,
+                 cache_write_tokens=cache_write_tokens,
++                reasoning_tokens=reasoning_tokens,  # PATCH
+                 context_window=context_window,
+                 response_id=response_id,
+             )

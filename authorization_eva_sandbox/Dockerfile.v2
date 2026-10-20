@@ -1,0 +1,58 @@
+# v2 sandbox image: API mock services (multi_server on :9100) + embedded Gitea.
+# No Flask webapps, no harness dependencies — the agent harness runs outside
+# (builtin loop / OpenHands) or is layered on top (Claude Code etc., Phase 5).
+#
+# Build:  docker build -f Dockerfile.v2 -t auth-sandbox:v2 .
+# Replaces `Dockerfile` after the Phase 3 pilot passes.
+FROM python:3.12
+
+RUN apt-get update && apt-get install -y iputils-ping vim curl git jq ca-certificates gettext-base libfaketime && rm -rf /var/lib/apt/lists/*
+
+################## Directory Structure ################################
+RUN groupadd --system agent \
+    && useradd --system --create-home --gid agent --shell /bin/bash agent \
+    && mkdir -p /utils /instruction /workspace /config /outputs \
+    && chown -R agent:agent /instruction /workspace /outputs
+
+COPY requirements-container-v2.txt /utils/requirements.txt
+RUN pip install --no-cache-dir -r /utils/requirements.txt
+
+################## Gitea (embedded git server) ########################
+# Unchanged from v1: pinned binary, SQLite-only, started lazily by init.sh
+# when task_config.json carries a gitea object.
+ARG GITEA_VERSION=1.22.6
+RUN set -eux; \
+    arch="$(dpkg --print-architecture)"; \
+    case "$arch" in \
+        amd64) gitea_arch=amd64 ;; \
+        arm64) gitea_arch=arm64 ;; \
+        *) echo "Unsupported arch: $arch" >&2; exit 1 ;; \
+    esac; \
+    curl -fsSL -o /usr/local/bin/gitea \
+        "https://dl.gitea.com/gitea/${GITEA_VERSION}/gitea-${GITEA_VERSION}-linux-${gitea_arch}"; \
+    chmod +x /usr/local/bin/gitea; \
+    /usr/local/bin/gitea --version
+
+RUN mkdir -p /srv/gitea/data /srv/gitea/custom/conf /srv/gitea/log /srv/gitea/work \
+    && useradd --system --shell /usr/sbin/nologin --home /srv/gitea git || true \
+    && chown -R git:git /srv/gitea
+COPY gitea/app.ini.template /srv/gitea/custom/conf/app.ini.template
+#######################################################################
+
+COPY init_v2.sh /utils/init.sh
+RUN chmod +x /utils/init.sh
+
+COPY services/ /utils/services/
+COPY oracle_user.py /utils/
+COPY trajectory_logger.py /utils/
+COPY gitea_bridge.py /utils/
+
+RUN ln -s /usr/local/bin/python3 /usr/local/bin/python_default
+
+WORKDIR /workspace
+
+ENV PYTHONPATH=/utils
+ENV GITEA_WORK_DIR=/srv/gitea/work
+ENV GITEA_CUSTOM=/srv/gitea/custom
+ENV TASK_CONFIG=/config/private/task_config.json
+#############################################################

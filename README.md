@@ -3,7 +3,7 @@
   <h1>AuthorizationBench: Benchmarking LLM Agent Authorization Alignment</h1>
 
   <p>
-    <a href="https://huggingface.co/datasets/peach-lab/AuthorizationBench"><img src="https://img.shields.io/badge/Dataset-Hugging%20Face-ffcc4d" alt="Dataset"></a>
+    <a href="https://huggingface.co/datasets/peach-lab/AuthorizationBench"><img src="https://img.shields.io/badge/Dataset-forthcoming-ffcc4d" alt="Dataset forthcoming"></a>
     <a href="docs/CONSTRUCTION.md"><img src="https://img.shields.io/badge/Pipeline-construction-4a5fc1" alt="Construction pipeline"></a>
     <a href="docs/TAXONOMIES.md"><img src="https://img.shields.io/badge/Taxonomies-pressure%20%26%20harm-2f9e44" alt="Taxonomies"></a>
     <a href="#citation"><img src="https://img.shields.io/badge/Paper-arXiv%20forthcoming-b31b1b" alt="Paper"></a>

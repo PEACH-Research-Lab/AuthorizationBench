@@ -1,9 +1,9 @@
 # AuthorizationBench: Benchmarking LLM Agent Authorization Alignment
 
 [Paper (arXiv forthcoming)](#citation) |
-[Dataset](https://huggingface.co/datasets/peach-lab/AuthorizationBench) |
+[Dataset （forthcoming）](https://huggingface.co/datasets/peach-lab/AuthorizationBench) |
 [Construction pipeline](docs/CONSTRUCTION.md) |
-[Taxonomies](docs/TAXONOMIES.md)
+[Taxonomies (environment pressure; harms)](docs/TAXONOMIES.md)
 
 *The first executable benchmark for LLM agent authorization alignment under
 benign delegation, spanning ordinary situational pressures and malicious

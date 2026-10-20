@@ -18,7 +18,7 @@
 ## Overview
 
 <div align="center">
-  <img src="assets/overview.png" width="820" alt="AuthorizationBench covers out-of-authorization actions with and without direct safety harm. Consequence-based evaluation misses the quadrant without direct harm.">
+  <img src="assets/overview.jpg" width="820" alt="AuthorizationBench covers out-of-authorization actions with and without direct safety harm. Consequence-based evaluation misses the quadrant without direct harm.">
 </div>
 
 Acting within the assigned authorization scope is an agent's most basic

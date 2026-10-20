@@ -18,7 +18,7 @@
 ## Overview
 
 <div align="center">
-  <img src="assets/overview.png" width="720" alt="AuthorizationBench positions authorization alignment as a distinct evaluation target">
+  <img src="assets/overview.png" width="820" alt="AuthorizationBench covers out-of-authorization actions with and without direct safety harm. Consequence-based evaluation misses the quadrant without direct harm.">
 </div>
 
 Acting within the assigned authorization scope is an agent's most basic

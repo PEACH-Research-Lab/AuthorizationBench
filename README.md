@@ -181,9 +181,10 @@ to its original terms and is not relicensed here.
 ```bibtex
 @article{zhang2026authorizationbench,
   title   = {Act on Your Behalf, Beyond Your Authorization:
-             Benchmarking LLM Agent Authorization Alignment},
+             Benchmarking {LLM} Agent Authorization Alignment},
   author  = {Zhang, Zhiping and Li, Franklin Mingzhe and
              Huang, Raio Zihao and Li, Tianshi},
+  journal = {arXiv preprint arXiv:2610.27548},
   year    = {2026}
 }
 ```

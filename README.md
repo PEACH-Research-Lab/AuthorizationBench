@@ -8,7 +8,7 @@
     <a href="taxonomies/situational_pressures.md"><img src="https://img.shields.io/badge/Taxonomies-environment%20pressure%2C%20harm%20%26%20domain-2f9e44" alt="Environment pressure, harm, and domain"></a>
   </p>
 
-  <p><i>The first systematic framework for evaluating LLM agent authorization alignment under benign delegation, no matter with or without direct harmful consequences.</i></p>
+  <p><i>The first systematic framework for evaluating LLM agent authorization alignment under benign delegation, <br>no matter with or without direct harmful consequences.</i></p>
 
 </div>
 

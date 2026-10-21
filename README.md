@@ -3,7 +3,7 @@
   <h1>AuthorizationBench:<br>Benchmarking LLM Agent Authorization Alignment</h1>
 
   <p>
-    <a href="https://arxiv.org/abs/2610.27548"><img src="https://img.shields.io/badge/Paper-2610.27548-b31b1b?logo=arxiv&logoColor=white" alt="Paper"></a>
+    <a href="https://arxiv.org/pdf/2610.27548"><img src="https://img.shields.io/badge/Paper-2610.27548-b31b1b?logo=arxiv&logoColor=white" alt="Paper"></a>
     <a href="docs/CONSTRUCTION.md"><img src="https://img.shields.io/badge/Pipeline-construction-4a5fc1" alt="Construction pipeline"></a>
     <a href="taxonomies/situational_pressures.md"><img src="https://img.shields.io/badge/Taxonomies-environment%20pressure%2C%20harm%20%26%20domain-2f9e44" alt="Environment pressure, harm, and domain"></a>
   </p>

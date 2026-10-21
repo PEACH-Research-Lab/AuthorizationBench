@@ -188,6 +188,3 @@ to its original terms and is not relicensed here.
   year    = {2026}
 }
 ```
-
-Machine-readable citation metadata is available in
-[`CITATION.cff`](CITATION.cff).

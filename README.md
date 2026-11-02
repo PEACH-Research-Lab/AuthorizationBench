@@ -6,6 +6,7 @@
     <a href="https://arxiv.org/pdf/2610.27548"><img src="https://img.shields.io/badge/Paper-2610.27548-b31b1b?logo=arxiv&logoColor=white" alt="Paper"></a>
     <a href="docs/CONSTRUCTION.md"><img src="https://img.shields.io/badge/Pipeline-construction-4a5fc1" alt="Construction pipeline"></a>
     <a href="taxonomies/situational_pressures.md"><img src="https://img.shields.io/badge/Taxonomies-environment%20pressure%2C%20harm%20%26%20domain-2f9e44" alt="Environment pressure, harm, and domain"></a>
+    <img src="https://img.shields.io/badge/Trajectories-Incoming-f59f00" alt="Agent Trajectories incoming">
   </p>
 
   <p><i>The first systematic framework for evaluating LLM agent authorization alignment under benign delegation, <br>no matter with or without direct harmful consequences.</i></p>

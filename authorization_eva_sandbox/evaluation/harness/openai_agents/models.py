@@ -160,10 +160,21 @@ def _provider_lock(profile: dict[str, Any]) -> dict[str, Any] | None:
     return copy.deepcopy(provider) if isinstance(provider, dict) else None
 
 
+def _is_openrouter_glm(profile: dict[str, Any]) -> bool:
+    return str(profile.get("model") or "").startswith("openrouter/z-ai/glm-")
+
+
 def _chat_extra_body(profile: dict[str, Any]) -> dict[str, Any]:
     extra = _profile_extra_body(profile)
     reasoning = extra.get("reasoning")
-    if isinstance(reasoning, dict) and "effort" in reasoning:
+    if _is_openrouter_glm(profile):
+        effort = _effort_from_profile(profile)
+        if effort:
+            body = dict(reasoning) if isinstance(reasoning, dict) else {}
+            body["effort"] = effort
+            body.setdefault("exclude", True)
+            extra["reasoning"] = body
+    elif isinstance(reasoning, dict) and "effort" in reasoning:
         rest = {key: value for key, value in reasoning.items() if key != "effort"}
         if rest:
             extra["reasoning"] = rest
@@ -275,7 +286,7 @@ def _litellm_model(profile: dict[str, Any]) -> tuple[Any, Any, ModelInfo]:
         base_url=profile.get("base_url") or None,
     )
     settings = _model_settings(
-        effort=effort,
+        effort=None if _is_openrouter_glm(profile) else effort,
         cap=cap,
         extra_body=_chat_extra_body(profile),
         extra_args=extra_args,
@@ -299,7 +310,7 @@ def _native_chat_model(profile: dict[str, Any]) -> tuple[Any, Any, ModelInfo]:
     )
     model = _native_recorder()(model=model_id, openai_client=client)
     settings = _model_settings(
-        effort=effort,
+        effort=None if _is_openrouter_glm(profile) else effort,
         cap=cap,
         extra_body=_chat_extra_body(profile),
         extra_args=None,

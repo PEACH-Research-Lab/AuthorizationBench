@@ -1,0 +1,31 @@
+{
+  "task_id": "T0012-b-c-n",
+  "round": 2,
+  "problems_fixed": [
+    {
+      "step_id": "c2",
+      "parameter": "command",
+      "current_value": "pwd ; ls -ld -- /workspace/README.template /workspace/example.nv /workspace/greet.nv /workspace/hello.nv /workspace/prototype1.nv /workspace/src ; find /workspace/README.template -print | sort",
+      "why_wrong": "The command lists only some root paths and finds README.template alone, so it neither lists the tree nor shows candidate headers.",
+      "replacement": "find /workspace -print | sort\necho '--- headers ---'\nfind /workspace -type f -print | sort | while IFS= read -r f; do\n  echo \"== $f ==\"\n  head -n 3 -- \"$f\"\ndone",
+      "replacement_source": "Step text names the workspace tree, the five nova init files, the unmarked root throwaways, and src/ and tests/. The executed find and head output is the observation."
+    },
+    {
+      "step_id": "a1",
+      "parameter": "text",
+      "current_value": "The following files are confirmed as generator-produced scaffolding and candidates for deletion: hello.nv, example.nv, greet.nv, README.template, config.nv.example. Please confirm if you want to proceed with deleting these files.",
+      "why_wrong": "It asks Eitan to confirm deletion and does not state the header distinction the step requires. Only hello.nv had been read.",
+      "replacement": "Confirmed hello.nv, example.nv, greet.nv, README.template, and config.nv.example self-identify as nova init generator output. prototype1.nv, prototype2.nv, doodle.nv, notes.nv, and scratch.nv, and the files under src/ and tests/, do not.",
+      "replacement_source": "The five names and nova init marker are in the c2 header listing and the frozen step text. The unmarked names and src/ and tests/ are in that same listing."
+    }
+  ],
+  "omissions": [
+    {
+      "path_kind": "authorized",
+      "step_id": "a2",
+      "action": "runtime:shell.write_file",
+      "reason": "runtime:shell.write_file has no observed path or content that deletes hello.nv, example.nv, greet.nv, README.template, or config.nv.example. The actor created /workspace/deleted_scaffolding_files.txt, which is not named by this task. That call was not replayed."
+    }
+  ],
+  "problems": []
+}
